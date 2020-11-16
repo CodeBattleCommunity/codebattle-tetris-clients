@@ -88,8 +88,6 @@ namespace TetrisClient
 					return ShiftTop();
 				case Direction.Down:
 					return ShiftBottom();
-				case Direction.Act:
-					return this;
 				default:
 					return this;
 			}

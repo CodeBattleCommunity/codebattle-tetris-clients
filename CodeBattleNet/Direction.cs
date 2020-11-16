@@ -27,6 +27,5 @@ namespace TetrisClient
 		Right,
 		Up,
 		Down,
-		Act
 	}
 }
