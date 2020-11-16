@@ -23,7 +23,7 @@
 namespace TetrisClient
 {
 	/// <summary>
-	/// В этом классе находится логика Вашего бота.
+	/// В этом классе находится логика Вашего бота
 	/// </summary>
 	internal class YourSolver : AbstractSolver
 	{
@@ -33,7 +33,7 @@ namespace TetrisClient
 		}
 
 		/// <summary>
-		/// Calls each move to make decision what to do (next move)
+		/// Этот метод вызывается каждый игровой тик
 		/// </summary>
 		protected internal override Command Get(Board board)
 		{

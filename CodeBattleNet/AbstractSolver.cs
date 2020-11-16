@@ -31,9 +31,9 @@ namespace TetrisClient
 		private const string ResponsePrefix = "board=";
 
 		/// <summary>
-		/// constructor
+		/// Конструктор
 		/// </summary>
-		/// <param name="server">server http address including email and code</param>
+		/// <param name="server">Ссылка подключения к серверу с токеном игрока и кодом</param>
 		public AbstractSolver(string server)
 		{
 			Console.OutputEncoding = Encoding.UTF8;
@@ -43,7 +43,7 @@ namespace TetrisClient
 		public string ServerUrl { get; private set; }
 
 		/// <summary>
-		/// Set this property to true to finish playing
+		/// Установка этого свойства в true закончит игру
 		/// </summary>
 		public bool ShouldExit { get; protected set; }
 
@@ -69,7 +69,7 @@ namespace TetrisClient
 						var boardString = response.Substring(ResponsePrefix.Length);
 						var board = new Board(boardString);
 
-						//Just print current state (gameBoard) to console
+						//Вывод текущего состояния игровой доски в консоль
 						Console.Clear();
 						Console.SetCursorPosition(0, 0);
 						Console.WriteLine(board.ToString());
@@ -106,7 +106,7 @@ namespace TetrisClient
 		protected internal abstract Command Get(Board gameBoard);
 
 		/// <summary>
-		/// Starts Minesweeper's client shutdown.
+		/// Инициирует выключение клиента
 		/// </summary>
 		public void InitiateExit()
 		{

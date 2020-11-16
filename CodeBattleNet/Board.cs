@@ -33,7 +33,7 @@ namespace TetrisClient
 		private LengthToXY LengthXY;
 
 		/// <summary>
-		/// GameBoard size (actual board size is MapSize x MapSize cells)
+		/// Размер игровой доски (размер доски Size x Size клеток)
 		/// </summary>
 		public int Size { get; private set; }
 
@@ -44,6 +44,10 @@ namespace TetrisClient
 			LengthXY = new LengthToXY(Size);
 		}
 
+		/// <summary>
+		/// Получить игровое поле в виде массива символов
+		/// </summary>
+		/// <returns></returns>
 		public char[,] GetField()
 		{
 			char[,] field = new char[Size, Size];
@@ -57,6 +61,11 @@ namespace TetrisClient
 			return field;
 		}
 
+		/// <summary>
+		/// Получить координаты, на которых распологаются заданные элементы
+		/// </summary>
+		/// <param name="elements"></param>
+		/// <returns></returns>
 		public List<Point> Get(params Element[] elements)
 		{
 			List<Point> result = new List<Point>();
@@ -74,6 +83,11 @@ namespace TetrisClient
 			return result;
 		}
 
+		/// <summary>
+		/// Получить элемент по заданной координате
+		/// </summary>
+		/// <param name="point"></param>
+		/// <returns></returns>
 		public Element GetAt(Point point)
 		{
 			if (point.IsOutOf(Size))
@@ -83,6 +97,12 @@ namespace TetrisClient
 			return GetAtInternal(point.X, point.Y);
 		}
 
+		/// <summary>
+		/// Получить элемент по заданной координате
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public Element GetAt(int x, int y)
 		{
 			if (IsOutOfField(x, y))
@@ -90,6 +110,12 @@ namespace TetrisClient
 			return GetAtInternal(x, y);
 		}
 
+		/// <summary>
+		/// Получить все элементы по заданной координате
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public List<Element> GetAllAt(int x, int y)
 		{
 			if (IsOutOfField(x, y))
@@ -97,12 +123,23 @@ namespace TetrisClient
 			return GetAllAtInternal(x, y);
 		}
 
+		/// <summary>
+		/// Получить все элементы по заданной координате
+		/// </summary>
+		/// <param name="pt"></param>
+		/// <returns></returns>
 		public List<Element> GetAllAt(Point pt)
 		{
 			return GetAllAt(pt.X, pt.Y);
 		}
 
-
+		/// <summary>
+		/// Проверить, находится ли хотя бы один из элементов по указанной координате
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="elements"></param>
+		/// <returns></returns>
 		public bool IsAt(int x, int y, params Element[] elements)
 		{
 			if (IsOutOfField(x, y))
@@ -112,6 +149,12 @@ namespace TetrisClient
 			return elements.Contains(GetAtInternal(x, y));
 		}
 
+		/// <summary>
+		/// Проверить, находится ли хотя бы один из элементов по указанной координате
+		/// </summary>
+		/// <param name="point"></param>
+		/// <param name="elements"></param>
+		/// <returns></returns>
 		public bool IsAt(Point point, params Element[] elements)
 		{
 			if (point.IsOutOf(Size))
@@ -121,16 +164,36 @@ namespace TetrisClient
 			return elements.Contains(GetAt(point));
 		}
 
+		/// <summary>
+		/// Проверить, находится ли элемент по соседству с указанной координатой. Проверяются также угловые соседи.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="element"></param>
+		/// <returns></returns>
 		public bool IsNear(int x, int y, Element element)
 		{
 			return CountNear(x, y, element) > 0;
 		}
 
+		/// <summary>
+		/// Проверить, находится ли элемент по соседству с указанной координатой. Проверяются также угловые соседи.
+		/// </summary>
+		/// <param name="pt"></param>
+		/// <param name="element"></param>
+		/// <returns></returns>
 		public bool IsNear(Point pt, Element element)
 		{
 			return IsNear(pt.X, pt.Y, element);
 		}
 
+		/// <summary>
+		/// Подсчитать количество соседних клеток, являющихся заданным элементом.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="element"></param>
+		/// <returns></returns>
 		public int CountNear(int x, int y, Element element)
 		{
 			int count = 0;
@@ -147,17 +210,34 @@ namespace TetrisClient
 			return count;
 		}
 
+		/// <summary>
+		/// Подсчитать количество соседних клеток, являющихся заданным элементом.
+		/// </summary>
+		/// <param name="pt"></param>
+		/// <param name="element"></param>
+		/// <returns></returns>
 		public int CountNear(Point pt, Element element)
 		{
 			return CountNear(pt.X, pt.Y, element);
 		}
 
-
+		/// <summary>
+		/// Конвертирует символ в элемент перечисления Element
+		/// </summary>
+		/// <param name="ch"></param>
+		/// <returns></returns>
 		public Element ValueOf(char ch)
 		{
 			return (Element)ch;
 		}
 
+
+		/// <summary>
+		/// Получить все элементы на соседних клетках
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public List<Element> GetNear(int x, int y)
 		{
 			List<Element> elements = new List<Element>(8);
@@ -174,16 +254,31 @@ namespace TetrisClient
 			return elements;
 		}
 
+		/// <summary>
+		/// Получить все элементы на соседних клетках
+		/// </summary>
+		/// <param name="point"></param>
+		/// <returns></returns>
 		public List<Element> GetNear(Point point)
 		{
 			return GetNear(point.X, point.Y);
 		}
 
+		/// <summary>
+		/// Проверить, выходит ли точка за пределы игрового поля
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public bool IsOutOfField(int x, int y)
 		{
 			return x < 0 || x >= Size || y < 0 || y >= Size;
 		}
 
+		/// <summary>
+		/// Получить все клетки, содержащие фигуры
+		/// </summary>
+		/// <returns></returns>
 		public List<Point> GetFigures()
 		{
 			return Get(
@@ -197,31 +292,59 @@ namespace TetrisClient
 			);
 		}
 
+		/// <summary>
+		/// Получить клетки, не занятые фигурами.
+		/// </summary>
+		/// <returns></returns>
 		public List<Point> GetFreeSpace()
 		{
 			return Get(Element.NONE);
 		}
 
+		/// <summary>
+		/// Проверить, является ли клетка пустой
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public bool IsFree(int x, int y)
 		{
 			return GetAtInternal(x, y) == Element.NONE;
 		}
 
+		/// <summary>
+		/// Получить тип текущей фигуры
+		/// </summary>
+		/// <returns></returns>
 		public Element GetCurrentFigureType()
 		{
 			return ValueOf(RawBoard.CurrentFigureType);
 		}
 
+		/// <summary>
+		/// Получить координату текущей фигуры
+		/// </summary>
+		/// <returns></returns>
 		public Point GetCurrentFigurePoint()
 		{
 			return RawBoard.CurrentFigurePoint;
 		}
 
+		/// <summary>
+		/// Получить следующие фигуры
+		/// </summary>
+		/// <returns></returns>
 		public List<Element> GetFutureFigures()
 		{
 			return RawBoard.FutureFigures.Select(x => ValueOf(x)).ToList();
 		}
 
+		/// <summary>
+		/// Перезаписать значение клетки другим значением (не влияет на состояние сервера)
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="ch"></param>
 		public void Set(int x, int y, char ch)
 		{
 			char[] oldLayer = RawBoard.Layers[0].ToCharArray();
@@ -229,6 +352,11 @@ namespace TetrisClient
 			RawBoard.Layers[0] = new string(oldLayer);
 		}
 
+		/// <summary>
+		/// Инвертирует значение Y-координаты
+		/// </summary>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public int InversionY(int y)
 		{
 			return Size - 1 - y;
@@ -245,6 +373,10 @@ namespace TetrisClient
 				.ToList();
 		}
 
+		/// <summary>
+		/// Получить строковое представление доски
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();

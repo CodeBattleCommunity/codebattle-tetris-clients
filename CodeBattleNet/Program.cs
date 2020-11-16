@@ -28,7 +28,7 @@ namespace TetrisClient
 	{
 		static string ServerUrl = "http://localhost:8080/codenjoy-contest/board/player/56r4jjp00yrtt3wcvwzy?code=5371613493337457091&gameName=tetris";
 
-		// you can get this code after registration on the server with your email
+		// ссылку можно взять в строке браузера после регистрации на сервере и логина
 		// http://server-ip:8080/codenjoy-contest/board/player/your@email.com?code=12345678901234567890
 
 		static void Main(string[] args)
