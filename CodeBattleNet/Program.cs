@@ -1,4 +1,4 @@
-/*-
+﻿/*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
@@ -26,7 +26,7 @@ namespace TetrisClient
 {
 	class Program
 	{
-		static string ServerUrl = "http://localhost:8080/codenjoy-contest/board/player/ziwpjz46y4z5567k7uup?code=3867579515136108220&gameName=tetris";
+		static string ServerUrl = "http://localhost:8080/codenjoy-contest/board/player/56r4jjp00yrtt3wcvwzy?code=5371613493337457091&gameName=tetris";
 
 		// you can get this code after registration on the server with your email
 		// http://server-ip:8080/codenjoy-contest/board/player/your@email.com?code=12345678901234567890
@@ -35,11 +35,10 @@ namespace TetrisClient
 		{
 			Console.SetWindowSize(Console.LargestWindowWidth - 3, Console.LargestWindowHeight - 3);
 
-			// creating custom Minesweeper's Ai client
-			
+			// создаем экземпляр игрового бота
 			var tetrisPlayer = new YourSolver(ServerUrl);
 
-			// starting thread with playing Minesweeper
+			// запускаем бота в отдельном потоке
 			Thread thread = new Thread(tetrisPlayer.Play);
 			thread.Start();
 			thread.Join();

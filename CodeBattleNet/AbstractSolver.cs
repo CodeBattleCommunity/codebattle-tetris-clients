@@ -1,4 +1,4 @@
-/*-
+﻿/*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
@@ -41,7 +41,6 @@ namespace TetrisClient
 		}
 
 		public string ServerUrl { get; private set; }
-
 
 		/// <summary>
 		/// Set this property to true to finish playing

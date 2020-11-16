@@ -1,4 +1,4 @@
-/*-
+﻿/*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
@@ -38,8 +38,8 @@ namespace TetrisClient
 		public int Size { get; private set; }
 
 		public Board(string boardString)
-        {
-            RawBoard = JsonConvert.DeserializeObject<JsonBoard>(boardString.Replace("\n", ""));
+		{
+			RawBoard = JsonConvert.DeserializeObject<JsonBoard>(boardString.Replace("\n", ""));
 			Size = (int)Math.Sqrt(RawBoard.Layers[0].Length);
 			LengthXY = new LengthToXY(Size);
 		}
@@ -57,7 +57,7 @@ namespace TetrisClient
 			return field;
 		}
 
-        public List<Point> Get(params Element[] elements)
+		public List<Point> Get(params Element[] elements)
 		{
 			List<Point> result = new List<Point>();
 
@@ -80,7 +80,7 @@ namespace TetrisClient
 			{
 				return Element.NONE;
 			}
-			return  GetAtInternal(point.X, point.Y);
+			return GetAtInternal(point.X, point.Y);
 		}
 
 		public Element GetAt(int x, int y)
@@ -109,7 +109,7 @@ namespace TetrisClient
 			{
 				return false;
 			}
-			return elements.Contains(GetAtInternal(x,y));
+			return elements.Contains(GetAtInternal(x, y));
 		}
 
 		public bool IsAt(Point point, params Element[] elements)
@@ -174,32 +174,32 @@ namespace TetrisClient
 			return elements;
 		}
 
-        public List<Element> GetNear(Point point)
+		public List<Element> GetNear(Point point)
 		{
 			return GetNear(point.X, point.Y);
 		}
 
-        public bool IsOutOfField(int x, int y)
-        {
-            return x < 0 || x >= Size || y < 0 || y >= Size;
-        }
+		public bool IsOutOfField(int x, int y)
+		{
+			return x < 0 || x >= Size || y < 0 || y >= Size;
+		}
 
-        public List<Point> GetFigures()
-        {
-            return Get(
-                Element.BLUE,
-                Element.CYAN,
-                Element.ORANGE,
-                Element.YELLOW,
-                Element.GREEN,
-                Element.PURPLE,
-                Element.RED
-            );
-        }
+		public List<Point> GetFigures()
+		{
+			return Get(
+				Element.BLUE,
+				Element.CYAN,
+				Element.ORANGE,
+				Element.YELLOW,
+				Element.GREEN,
+				Element.PURPLE,
+				Element.RED
+			);
+		}
 
-        public List<Point> GetFreeSpace()
-        {
-            return Get(Element.NONE);
+		public List<Point> GetFreeSpace()
+		{
+			return Get(Element.NONE);
 		}
 
 		public bool IsFree(int x, int y)
@@ -208,19 +208,19 @@ namespace TetrisClient
 		}
 
 		public Element GetCurrentFigureType()
-        {
-            return ValueOf(RawBoard.CurrentFigureType);
-        }
+		{
+			return ValueOf(RawBoard.CurrentFigureType);
+		}
 
-        public Point GetCurrentFigurePoint()
-        {
-            return RawBoard.CurrentFigurePoint;
-        }
+		public Point GetCurrentFigurePoint()
+		{
+			return RawBoard.CurrentFigurePoint;
+		}
 
-        public List<Element> GetFutureFigures()
-        {
-            return RawBoard.FutureFigures.Select(x => ValueOf(x)).ToList();
-        }
+		public List<Element> GetFutureFigures()
+		{
+			return RawBoard.FutureFigures.Select(x => ValueOf(x)).ToList();
+		}
 
 		public void Set(int x, int y, char ch)
 		{

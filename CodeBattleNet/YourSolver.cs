@@ -1,4 +1,4 @@
-/*-
+п»ї/*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
@@ -23,7 +23,7 @@
 namespace TetrisClient
 {
 	/// <summary>
-	/// В этом классе находится логика Вашего бота.
+	/// Р’ СЌС‚РѕРј РєР»Р°СЃСЃРµ РЅР°С…РѕРґРёС‚СЃСЏ Р»РѕРіРёРєР° Р’Р°С€РµРіРѕ Р±РѕС‚Р°.
 	/// </summary>
 	internal class YourSolver : AbstractSolver
 	{
@@ -37,7 +37,7 @@ namespace TetrisClient
 		/// </summary>
 		protected internal override Command Get(Board board)
 		{
-			// Код писать сюда!
+			// РљРѕРґ РїРёСЃР°С‚СЊ СЃСЋРґР°!
 			return Command.DOWN
 				.Then(Command.SUICIDE);
 		}
