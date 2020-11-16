@@ -88,13 +88,13 @@ namespace TetrisClient
 
             var result = "";
             if (_direction != null) result = _direction.ToString();
-            else if (_rotation != null) result = string.Format("{0}{1}", Direction.Act.ToString(), formatRotationAction(_rotation.Value));
+            else if (_rotation != null) result = string.Format("{0}{1}", Direction.Act.ToString(), FormatRotationAction(_rotation.Value));
             if (_next != null) result += ", " + _next.ToString();
 
             return result;
         }
 
-        private string formatRotationAction(Rotation rotation)
+        private string FormatRotationAction(Rotation rotation)
         {
             switch (rotation)
             {

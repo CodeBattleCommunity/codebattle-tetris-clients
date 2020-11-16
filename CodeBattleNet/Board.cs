@@ -44,6 +44,18 @@ namespace TetrisClient
 			LengthXY = new LengthToXY(Size);
 		}
 
+		public char[,] GetField()
+		{
+			char[,] field = new char[Size, Size];
+			for (int i = 0; i < Size; i++)
+			{
+				for (int j = 0; j < Size; j++)
+				{
+					field[i, j] = RawBoard.Layers[0][LengthXY.GetLength(i, j)];
+				}
+			}
+			return field;
+		}
 
         public List<Point> Get(params Element[] elements)
 		{
@@ -62,24 +74,6 @@ namespace TetrisClient
 			return result;
 		}
 
-        public List<PointExtendView> GetAllExtended()
-        {
-            var result = new List<PointExtendView>(Size * Size);
-            for (int x = 0; x < Size; x++)
-                for (int y = 0; y < Size; y++)
-                    result.Add(new PointExtendView(x, y, GetAtInternal(x, y)));
-            return result;
-        }
-
-		public bool IsAt(Point point, Element element)
-		{
-			if (point.IsOutOf(Size))
-			{
-				return false;
-			}
-			return GetAt(point) == element;
-		}
-
 		public Element GetAt(Point point)
 		{
 			if (point.IsOutOf(Size))
@@ -89,12 +83,24 @@ namespace TetrisClient
 			return  GetAtInternal(point.X, point.Y);
 		}
 
-        public Element GetAt(int x, int y)
+		public Element GetAt(int x, int y)
 		{
-			if (IsOutOfField(x,y))
+			if (IsOutOfField(x, y))
 				throw new Exception("Out of range");
-            return GetAtInternal(x, y);
-        }
+			return GetAtInternal(x, y);
+		}
+
+		public List<Element> GetAllAt(int x, int y)
+		{
+			if (IsOutOfField(x, y))
+				throw new Exception("Out of range");
+			return GetAllAtInternal(x, y);
+		}
+
+		public List<Element> GetAllAt(Point pt)
+		{
+			return GetAllAt(pt.X, pt.Y);
+		}
 
 
 		public bool IsAt(int x, int y, params Element[] elements)
@@ -106,12 +112,26 @@ namespace TetrisClient
 			return elements.Contains(GetAtInternal(x,y));
 		}
 
-		public bool IsNear(int x, int y, params Element[] elements)
+		public bool IsAt(Point point, params Element[] elements)
 		{
-			return CountNear(x, y, elements) > 0;
+			if (point.IsOutOf(Size))
+			{
+				return false;
+			}
+			return elements.Contains(GetAt(point));
 		}
 
-		public int CountNear(int x, int y, params Element[] elements)
+		public bool IsNear(int x, int y, Element element)
+		{
+			return CountNear(x, y, element) > 0;
+		}
+
+		public bool IsNear(Point pt, Element element)
+		{
+			return IsNear(pt.X, pt.Y, element);
+		}
+
+		public int CountNear(int x, int y, Element element)
 		{
 			int count = 0;
 			for (int i = x - 1; i < x + 2; i++)
@@ -120,12 +140,16 @@ namespace TetrisClient
 				{
 					if (i == x && j == y)
 						continue;
-					if (IsAt(i, j, elements))
+					if (IsAt(i, j, element))
 						count++;
 				}
 			}
-
 			return count;
+		}
+
+		public int CountNear(Point pt, Element element)
+		{
+			return CountNear(pt.X, pt.Y, element);
 		}
 
 
@@ -155,45 +179,10 @@ namespace TetrisClient
 			return GetNear(point.X, point.Y);
 		}
 
-        public List<PointExtendView> GetNearExtend(int x, int y, NeighborsType nType)
-        {
-            List<PointExtendView> elements = new List<PointExtendView>(nType == NeighborsType.All ? 8 : 4);
-            for (int i = x - 1; i < x + 2; i++)
-            {
-                for (int j = y - 1; j < y + 2; j++)
-                {
-
-                    if ((i != x || j != y) &&
-                        (nType == NeighborsType.All ||
-                         (nType == NeighborsType.Cross && (i == x || j == y)) ||
-                         (nType == NeighborsType.DiagonalCross && (Math.Abs(i - x) - Math.Abs(j - y) == 0))) &&
-                        !IsOutOfField(i, j))
-                        elements.Add(new PointExtendView(i, j, GetAt(i, j)));
-                }
-            }
-
-            return elements;
-        }
-
-        public List<PointExtendView> GetNearExtend(Point point, NeighborsType nType)
-        {
-            return GetNearExtend(point.X, point.Y, nType);
-        }
-
-        public List<PointExtendView> GetNearExtend(PointExtendView point, NeighborsType nType)
-        {
-            return GetNearExtend(point.X, point.Y, nType);
-        }
-
         public bool IsOutOfField(int x, int y)
         {
             return x < 0 || x >= Size || y < 0 || y >= Size;
         }
-
-        public bool IsOutOfField(Point point)
-		{
-			return point.IsOutOf(Size);
-		}
 
         public List<Point> GetFigures()
         {
@@ -211,14 +200,19 @@ namespace TetrisClient
         public List<Point> GetFreeSpace()
         {
             return Get(Element.NONE);
-        }
+		}
 
-        public Element GetCurrentFigureType()
+		public bool IsFree(int x, int y)
+		{
+			return GetAtInternal(x, y) == Element.NONE;
+		}
+
+		public Element GetCurrentFigureType()
         {
             return ValueOf(RawBoard.CurrentFigureType);
         }
 
-        public Point GetCurrentFigurePosition()
+        public Point GetCurrentFigurePoint()
         {
             return RawBoard.CurrentFigurePoint;
         }
@@ -228,18 +222,41 @@ namespace TetrisClient
             return RawBoard.FutureFigures.Select(x => ValueOf(x)).ToList();
         }
 
-        public override string ToString()
+		public void Set(int x, int y, char ch)
+		{
+			char[] oldLayer = RawBoard.Layers[0].ToCharArray();
+			oldLayer[LengthXY.GetLength(x, y)] = ch;
+			RawBoard.Layers[0] = new string(oldLayer);
+		}
+
+		public int InversionY(int y)
+		{
+			return Size - 1 - y;
+		}
+
+		private Element GetAtInternal(int x, int y)
+		{
+			return (Element)RawBoard.Layers[0][LengthXY.GetLength(x, y)];
+		}
+
+		private List<Element> GetAllAtInternal(int x, int y)
+		{
+			return RawBoard.Layers.Select(layer => (Element)layer[LengthXY.GetLength(x, y)])
+				.ToList();
+		}
+
+		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();
-            sb.Append("Current Figure Point: ");
-            sb.Append(RawBoard.CurrentFigurePoint.ToString());
-            sb.AppendLine();
-            sb.Append("Current Figure Type: ");
-            sb.Append(RawBoard.CurrentFigureType);
-            sb.AppendLine();
-            sb.Append("Future Figures: ");
-            RawBoard.FutureFigures.ForEach(x => sb.Append(x));
-            sb.AppendLine();
+			sb.Append("Current Figure Point: ");
+			sb.Append(RawBoard.CurrentFigurePoint.ToString());
+			sb.AppendLine();
+			sb.Append("Current Figure Type: ");
+			sb.Append(RawBoard.CurrentFigureType);
+			sb.AppendLine();
+			sb.Append("Future Figures: ");
+			RawBoard.FutureFigures.ForEach(x => sb.Append(x));
+			sb.AppendLine();
 			for (int line = 0; line < Size; line++)
 			{
 				if (line > 0)
@@ -250,10 +267,5 @@ namespace TetrisClient
 
 			return sb.ToString();
 		}
-
-        private Element GetAtInternal(int x, int y)
-        {
-            return (Element)RawBoard.Layers[0][LengthXY.GetLength(x, y)];
-        }
-    }
+	}
 }
