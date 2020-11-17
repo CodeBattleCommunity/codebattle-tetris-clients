@@ -1,4 +1,4 @@
-/*-
+﻿/*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
@@ -88,8 +88,6 @@ namespace TetrisClient
 					return ShiftTop();
 				case Direction.Down:
 					return ShiftBottom();
-				case Direction.Act:
-					return this;
 				default:
 					return this;
 			}

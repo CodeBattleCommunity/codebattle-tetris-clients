@@ -1,4 +1,4 @@
-/*-
+﻿/*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
@@ -19,16 +19,15 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace TetrisClient
 {
-    public class JsonBoard
-    {
-        public Point CurrentFigurePoint { get; set; }
-        public char CurrentFigureType { get; set; }
-        public List<char> FutureFigures { get; set; }
-        public List<string> Layers { get; set; }
-        
-    }
+	public class JsonBoard
+	{
+		public Point CurrentFigurePoint { get; set; }
+		public char CurrentFigureType { get; set; }
+		public List<char> FutureFigures { get; set; }
+		public List<string> Layers { get; set; }
+	}
 }

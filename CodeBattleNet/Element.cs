@@ -1,4 +1,4 @@
-/*-
+﻿/*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
@@ -23,14 +23,13 @@ namespace TetrisClient
 {
 	public enum Element : short
 	{
-		BLUE    = (short)'I',
-		CYAN    = (short)'J',
-		ORANGE  = (short)'L',
-		YELLOW  = (short)'O',
-		GREEN   = (short)'S',
-		PURPLE  = (short)'T',
-		RED     = (short)'Z',
-		NONE    = (short)'.',
+		BLUE =   (short)'I',
+		CYAN =   (short)'J',
+		ORANGE = (short)'L',
+		YELLOW = (short)'O',
+		GREEN =  (short)'S',
+		PURPLE = (short)'T',
+		RED =    (short)'Z',
+		NONE =   (short)'.',
 	}
-
 }

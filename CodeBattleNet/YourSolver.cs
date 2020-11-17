@@ -1,4 +1,4 @@
-/*-
+﻿/*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
@@ -19,13 +19,11 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-using TetrisClient;
-using System.Collections.Generic;
 
 namespace TetrisClient
 {
 	/// <summary>
-	/// This is Minesweeper client.
+	/// В этом классе находится логика Вашего бота
 	/// </summary>
 	internal class YourSolver : AbstractSolver
 	{
@@ -34,19 +32,14 @@ namespace TetrisClient
 		{
 		}
 
-        private bool mode = false;
 		/// <summary>
-		/// Calls each move to make decision what to do (next move)
+		/// Этот метод вызывается каждый игровой тик
 		/// </summary>
 		protected internal override Command Get(Board board)
-        {
-            mode = !mode;
-            if(mode) return Command.MoveTo(Direction.Left);
-            return Command.Rotate270(Direction.Left);
+		{
+			// Код писать сюда!
+			return Command.DOWN
+				.Then(Command.SUICIDE);
 		}
-
 	}
-
-
-
 }
