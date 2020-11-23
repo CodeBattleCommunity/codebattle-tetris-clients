@@ -194,3 +194,9 @@ $RECYCLE.BIN/
 
 _NCrunch*
 /CodeBattleNet/.vs/Loderunner/v16/Server/sqlite3
+
+
+## Python
+
+./CodeBattlePython/tetris_client/internals/__pycache__/*
+./CodeBattlePython/tetris_client/__pycache__/*
