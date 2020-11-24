@@ -118,7 +118,7 @@
 Все необходимые методы привязаны к объекту классе Board, который передается как агрумент в главный метод turn - https://github.com/CodeBattleCommunity/codebattle-tetris-clients/blob/python-client/CodeBattlePython/tetris_client/__main__.py#L12.
 
 
-#### Список методов API для работы с игровым "стаканом" (доской), класс Board: tetris_client/internals/board.py
+### Список методов API для работы с игровым "стаканом" (доской), класс Board: tetris_client/internals/board.py
 
 **get_current_figure_point()** - возвращает координаты текущей фигуры (объект класса Point)
 
@@ -133,7 +133,9 @@
 **is_element_at(point: Union[Point, Tuple(int)], element_object: Union[Element, str])** - проверяет соответствует ли фигура в 'element_object' фигуре на доске в указанных координатах
 
 
-#### Список методов API для работы с координатами, класс Point: tetris_client/internals/point.py
+### Список методов API для работы с координатами, класс Point: 
+
+[tetris_client/internals/point.py](tetris_client/internals/point.py)
 
 **Point(x, y).is_out_of_board(board_size: int = 18)**  - проверяет находится ли координата в рамках игровой доски, дефолтное значение размера доски - 18 
 
@@ -147,18 +149,23 @@
 
 
 
-#### Список доступных Actions (ход в игре)
+### Список доступных Actions (ход в игре)
 Данный тип является обязательным для ответа в методе turn.
 
-Список доступных actions - CodeBattlePython/tetris_client/internals/tetris_action.py 
+Список доступных actions - [tetris_client/internals/tetris_action.py](tetris_client/internals/tetris_action.py) 
 
-LEFT = "left"
-RIGHT = "right"
-DOWN = "down"
-STOP = "stop"
-ACT = "act"
-ACT_2 = "act(2)"
-ACT_3 = "act(3),"
-ACT_0_0 = "act(0,0)"
+LEFT = "left" – передвижение фигурки влево/вправо;
+
+RIGHT = "right" – передвижение фигурки вправо;
+
+DOWN = "down" - приземление фигурки;
+
+ACT = "act" - вращение фигурки по часовой стрелке на 90 градусов;
+
+ACT_2 = "act(2)" - вращение на 180 градусов;
+
+ACT_3 = "act(3)" - вращение против часовой стрелки на 90 градусов;
+
+ACT_0_0 = "act(0,0)" - обнуление стакана (как и при его переполнении будут сняты штрафные очки).
 
 

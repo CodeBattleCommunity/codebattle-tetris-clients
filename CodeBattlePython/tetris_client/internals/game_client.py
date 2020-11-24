@@ -27,7 +27,7 @@ class GameClient:
             on_open=lambda ws: self.on_open(ws),
         )
 
-    def run(self, on_turn=lambda a: TetrisAction.STOP):
+    def run(self, on_turn=lambda a: TetrisAction.DOWN):
         self.on_turn = on_turn
         self.socket.run_forever()
 
