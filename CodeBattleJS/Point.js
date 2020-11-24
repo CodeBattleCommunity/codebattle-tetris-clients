@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-const Point = (x, y, element) => {
+const Point = function (x, y, element) {
     /**
      * type {Point}
      */

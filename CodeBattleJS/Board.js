@@ -46,7 +46,6 @@ class LengthToXY {
 class Board {
   constructor(board) {
     this.board = board;
-    this._board = "";
     this.boardSize = this.size() * this.size();
     this.lengthToXY = new LengthToXY(this.size());
     this.isAt = this.isAt.bind(this);
@@ -68,10 +67,9 @@ class Board {
 
   get(elements) {
     let result = [];
-    const elementsArray = Object.values(elements);
     for (let i = 0; i < this.boardSize; i++) {
       const point = this.lengthToXY.getXY(i);
-      const isElementInPoint = elementsArray.some((element) =>
+      const isElementInPoint = elements.some((element) =>
         this.isAt(point.getX(), point.getY(), element)
       );
       if (isElementInPoint) {
@@ -82,11 +80,19 @@ class Board {
   }
 
   getFigures() {
-    return this.get(ELEMENTS);
+    return this.get([
+        ELEMENTS.BLUE,
+        ELEMENTS.CYAN,
+        ELEMENTS.ORANGE,
+        ELEMENTS.YELLOW,
+        ELEMENTS.GREEN,
+        ELEMENTS.PURPLE,
+        ELEMENTS.RED,
+    ]);
   }
 
   getFreeSpace() {
-    return this.get(ELEMENTS.NONE);
+    return this.get([ELEMENTS.NONE]);
   }
 
   getCurrentFigureType() {
@@ -99,7 +105,7 @@ class Board {
     return new Point(x, y, this.getAt(x, y));
   }
 
-  getCurrentFigureType() {
+  getFutureFigures() {
     return this.board.futureFigures;
   }
 
@@ -110,10 +116,6 @@ class Board {
           this.isAt(x, y + 1, element) ||
           this.isAt(x, y - 1, element)
       : false;
-  }
-
-  update(raw) {
-    this._board = raw.replace("board=", "");
   }
 
   size() {
