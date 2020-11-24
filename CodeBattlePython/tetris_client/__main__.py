@@ -20,6 +20,11 @@ def turn(gcb: Board) -> TetrisAction:
     #     ACT_3 = 'act(3),'
     #     ACT_0_0 = 'act(0,0)'
     # change return below to your code (right now its returns random aciton):
+    elem = gcb.get_current_figure_type()
+    print(gcb.get_future_figures())
+    print(gcb.get_current_figure_point()) 
+    print(gcb.get_current_figure_type())
+    print(gcb.find_element(elem))
     return random.choice(list(TetrisAction))
 
 

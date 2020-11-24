@@ -1,12 +1,4 @@
-﻿## ENG-language Instruction
-## Python Client
-
-## Server Response Example
-
-## API Methods to communicate with Game Server
-
-
-## RU-language Инструкция
+﻿## Инструкция
 
 ### Клиент на python
 
@@ -123,3 +115,23 @@
 
 ### Методы API для работы с сервером
 
+Все необходимые методы привязаны к объекту классе Board, который передается как агрумент в главный метод turn - https://github.com/CodeBattleCommunity/codebattle-tetris-clients/blob/python-client/CodeBattlePython/tetris_client/__main__.py#L12.
+
+
+#### Список методов API для работы с игровым "стаканом" (доской), класс Board: tetris_client/internals/board.py
+
+get_current_figure_point() - возвращает координаты текущей фигуры (объект класса Point)
+get_current_figure_type() - возвращает тип текущей фигуры
+get_future_figures() - возвращает лист следующих фигур
+get_element_at(point: Union[Point, Tuple(int)]) - возвращает фигуру (объект класса Element), находящуюся на доске в переданных координатах
+has_element_at(point: Union[Point, Tuple(int)]) - проверяет есть ли в указанных координатах фигура
+is_element_at(point: Union[Point, Tuple(int)], element_object: Union[Element, str]) - проверяет соответствует ли фигура в 'element_object' фигуре на доске в указанных координатах
+
+
+#### Список методов API для работы с координатами, класс Point: tetris_client/internals/point.py
+
+Point(x, y).is_out_of_board(board_size: int = 18)  - проверяет находится ли координата в рамках игровой доски, дефолтное значение размера доски - 18 
+Point(x, y).shift_left(self, delta: int = 1) - сдвигает координату на delta шагов влево (по умолчанию 1)
+Point(x, y).shift_right(self, delta: int = 1) - сдвигает координату на delta шагов вправо (по умолчанию 1)
+Point(x, y).shift_top(self, delta: int = 1) - сдвигает координату на delta шагов вверх (по умолчанию 1)
+Point(x, y).shift_bottom(self, delta: int = 1) - сдвигает координату на delta шагов вниз (по умолчанию 1)

@@ -2,7 +2,8 @@ from math import sqrt
 
 from tetris_client.internals.element import Element
 from tetris_client.internals.point import Point
-from typing import Optional, Tuple, List
+from tetris_client.internals.utils import prepare_element, prepare_point
+from typing import Optional, Tuple, List, Union
 import json
 
 
@@ -27,7 +28,7 @@ class Board:
         for i in range(self._size * self._size):
             point = self.get_point_by_shift(i)
             for type_ in element_types:
-                if self.has_element_at(point, type_):
+                if self.is_element_at(point, type_):
                     return point
         return None
 
@@ -37,7 +38,7 @@ class Board:
         for i in range(self._size * self._size):
             point = self.get_point_by_shift(i)
             for type_ in element_types:
-                if self.has_element_at(point, type_):
+                if self.is_element_at(point, type_):
                     _points.append(point)
         return _points
 
@@ -53,23 +54,28 @@ class Board:
     def get_future_figures(self) -> List[str]:
         return self._json["futureFigures"]
 
-    def get_element_at(self, point: Point) -> Element:
+    def get_element_at(self, point: Union[Point, Tuple[int]]) -> Element:
         """ Return an Element object at coordinates x,y."""
+        point = prepare_point(point)
         return Element(self._layer[self._xy2strpos(point.get_x(), point.get_y())])
 
-    def has_element_at(self, point: Point, element_object: Element) -> bool:
+    def is_element_at(self, point: Union[Point,  Tuple[int]], element_object: Union[Element, str]) -> bool:
+        point = prepare_point(point)
+        element_object
         if point.is_out_of_board(self._size):
             return False
         return element_object == self.get_element_at(point)
 
-    def find_element(self, type_: Element) -> Optional[Point]:
+    def find_element(self, type_: Union[Element, str]) -> Optional[Point]:
+        type_ = prepare_element(type_)
         for i in range(self._size * self._size):
             point = self.get_point_by_shift(i)
-            if self.has_element_at(point, type_):
+            if self.is_element_at(point, type_):
                 return point
         return None
 
-    def get_shift_by_point(self, point: Point) -> int:
+    def get_shift_by_point(self, point: Union[Point, Tuple[int]]) -> int:
+        point = prepare_point(point)
         return point.get_y() * self._size + point.get_x()
 
     def _strpos2pt(self, strpos: int) -> Point:
@@ -91,10 +97,6 @@ class Board:
                 for i in range(0, self._len, self._size)
             ]
         )
-
+        
     def to_string(self) -> str:
         return str(self)
-
-
-if __name__ == "__main__":
-    raise RuntimeError("This module is not designed to be ran from CLI")

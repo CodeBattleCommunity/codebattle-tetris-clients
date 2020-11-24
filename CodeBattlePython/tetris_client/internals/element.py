@@ -38,7 +38,3 @@ class Element:
 
     def __eq__(self, otherElement) -> bool:
         return self._name == otherElement._name and self._char == otherElement._char
-
-
-if __name__ == "__main__":
-    raise RuntimeError("This module is not intended to be ran from CLI")
