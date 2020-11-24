@@ -1,7 +1,4 @@
-﻿## Инструкция
-
-### Клиент на python
-
+## Клиент на python
 
 #### Подготовка virtualenv и установка зависимостей
 Чтобы начать работать потребуется Python 3.6 или выше. 
@@ -118,7 +115,9 @@
 Все необходимые методы привязаны к объекту классе Board, который передается как агрумент в главный метод turn - https://github.com/CodeBattleCommunity/codebattle-tetris-clients/blob/python-client/CodeBattlePython/tetris_client/__main__.py#L12.
 
 
-### Список методов API для работы с игровым "стаканом" (доской), класс Board: tetris_client/internals/board.py
+### Список методов API для работы с игровым "стаканом" (доской), класс Board: 
+
+[tetris_client/internals/board.py](tetris_client/internals/board.py)
 
 **get_current_figure_point()** - возвращает координаты текущей фигуры (объект класса Point)
 
