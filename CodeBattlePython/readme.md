@@ -120,18 +120,45 @@
 
 #### Список методов API для работы с игровым "стаканом" (доской), класс Board: tetris_client/internals/board.py
 
-get_current_figure_point() - возвращает координаты текущей фигуры (объект класса Point)
-get_current_figure_type() - возвращает тип текущей фигуры
-get_future_figures() - возвращает лист следующих фигур
-get_element_at(point: Union[Point, Tuple(int)]) - возвращает фигуру (объект класса Element), находящуюся на доске в переданных координатах
-has_element_at(point: Union[Point, Tuple(int)]) - проверяет есть ли в указанных координатах фигура
-is_element_at(point: Union[Point, Tuple(int)], element_object: Union[Element, str]) - проверяет соответствует ли фигура в 'element_object' фигуре на доске в указанных координатах
+**get_current_figure_point()** - возвращает координаты текущей фигуры (объект класса Point)
+
+**get_current_figure_type()** - возвращает тип текущей фигуры
+
+**get_future_figures()** - возвращает лист следующих фигур
+
+**get_element_at(point: Union[Point, Tuple(int)])** - возвращает фигуру (объект класса Element), находящуюся на доске в переданных координатах
+
+**has_element_at(point: Union[Point, Tuple(int)])** - проверяет есть ли в указанных координатах фигура
+
+**is_element_at(point: Union[Point, Tuple(int)], element_object: Union[Element, str])** - проверяет соответствует ли фигура в 'element_object' фигуре на доске в указанных координатах
 
 
 #### Список методов API для работы с координатами, класс Point: tetris_client/internals/point.py
 
-Point(x, y).is_out_of_board(board_size: int = 18)  - проверяет находится ли координата в рамках игровой доски, дефолтное значение размера доски - 18 
-Point(x, y).shift_left(self, delta: int = 1) - сдвигает координату на delta шагов влево (по умолчанию 1)
-Point(x, y).shift_right(self, delta: int = 1) - сдвигает координату на delta шагов вправо (по умолчанию 1)
-Point(x, y).shift_top(self, delta: int = 1) - сдвигает координату на delta шагов вверх (по умолчанию 1)
-Point(x, y).shift_bottom(self, delta: int = 1) - сдвигает координату на delta шагов вниз (по умолчанию 1)
+**Point(x, y).is_out_of_board(board_size: int = 18)**  - проверяет находится ли координата в рамках игровой доски, дефолтное значение размера доски - 18 
+
+**Point(x, y).shift_left(self, delta: int = 1)** - сдвигает координату на delta шагов влево (по умолчанию 1)
+
+**Point(x, y).shift_right(self, delta: int = 1)** - сдвигает координату на delta шагов вправо (по умолчанию 1)
+
+**Point(x, y).shift_top(self, delta: int = 1)** - сдвигает координату на delta шагов вверх (по умолчанию 1)
+
+**Point(x, y).shift_bottom(self, delta: int = 1)** - сдвигает координату на delta шагов вниз (по умолчанию 1)
+
+
+
+#### Список доступных Actions (ход в игре)
+Данный тип является обязательным для ответа в методе turn.
+
+Список доступных actions - CodeBattlePython/tetris_client/internals/tetris_action.py 
+
+LEFT = "left"
+RIGHT = "right"
+DOWN = "down"
+STOP = "stop"
+ACT = "act"
+ACT_2 = "act(2)"
+ACT_3 = "act(3),"
+ACT_0_0 = "act(0,0)"
+
+
