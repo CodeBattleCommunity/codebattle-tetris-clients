@@ -117,7 +117,7 @@ class Board {
     return new Point(x, y, this.getAt(x, y));
   }
 
-  predictCurrentFigurePoints = (rotation = 0, x = this.board.currentFigurePoint.x, y = this.board.currentFigurePoint.y) => {
+  predictCurrentFigurePoints = ({ rotation = 0, x = this.board.currentFigurePoint.x, y = this.board.currentFigurePoint.y } = {}) => {
     const anchor = new Point(x, y, this.board.currentFigureType);
     const shiftTopAfterRotation = getShiftAfterRotation('shiftTop', rotation);
     const shiftRightAfterRotation = getShiftAfterRotation('shiftRight', rotation);
