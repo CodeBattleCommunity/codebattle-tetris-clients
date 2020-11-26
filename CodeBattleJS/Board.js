@@ -20,6 +20,19 @@
  * #L%
  */
 
+const SHIFT_ORDER = ['shiftTop', 'shiftRight', 'shiftBottom', 'shiftLeft'];
+
+const getShiftAfterRotation = (shiftType, rotation = 0) => {
+  if (!rotation) {
+    return shiftType;
+  }
+
+  const shiftOrder = SHIFT_ORDER.findIndex(type => type === shiftType);
+  const shiftOrderAfterRotation = shiftOrder + rotation;
+
+  return SHIFT_ORDER[shiftOrderAfterRotation < SHIFT_ORDER.length ? shiftOrderAfterRotation : shiftOrderAfterRotation - SHIFT_ORDER.length];
+};
+
 class LengthToXY {
   constructor(boardSize) {
     this.boardSize = boardSize;
@@ -102,6 +115,74 @@ class Board {
     const x = this.board.currentFigurePoint.x;
     const y = this.board.currentFigurePoint.y;
     return new Point(x, y, this.getAt(x, y));
+  }
+
+  predictCurrentFigurePoints = (rotation = 0, x = this.board.currentFigurePoint.x, y = this.board.currentFigurePoint.y) => {
+    const anchor = new Point(x, y, this.board.currentFigureType);
+    const shiftTopAfterRotation = getShiftAfterRotation('shiftTop', rotation);
+    const shiftRightAfterRotation = getShiftAfterRotation('shiftRight', rotation);
+    const shiftBottomAfterRotation = getShiftAfterRotation('shiftBottom', rotation);
+    const shiftLeftAfterRotation = getShiftAfterRotation('shiftLeft', rotation);
+    
+    switch(this.board.currentFigureType) {
+      case ELEMENTS.BLUE: 
+        return [
+          anchor[shiftTopAfterRotation](1),
+          anchor,
+          anchor[shiftBottomAfterRotation](1),
+          anchor[shiftBottomAfterRotation](2),
+        ]
+
+      case ELEMENTS.CYAN:
+        return [
+          anchor[shiftTopAfterRotation](1),
+          anchor,
+          anchor[shiftBottomAfterRotation](1),
+          anchor[shiftBottomAfterRotation](1)[shiftLeftAfterRotation](1),
+        ];
+
+      case ELEMENTS.ORANGE:
+        return [
+          anchor[shiftTopAfterRotation](1),
+          anchor,
+          anchor[shiftBottomAfterRotation](1),
+          anchor[shiftBottomAfterRotation](1)[shiftRightAfterRotation](1),
+        ];
+       
+      case ELEMENTS.YELLOW:
+        return [
+          anchor,
+          anchor[shiftRightAfterRotation](1),
+          anchor[shiftBottomAfterRotation](1),
+          anchor[shiftBottomAfterRotation](1)[shiftRightAfterRotation](1),
+        ];
+
+      case ELEMENTS.GREEN:
+        return [
+          anchor[shiftLeftAfterRotation](1),
+          anchor,
+          anchor[shiftTopAfterRotation](1),
+          anchor[shiftTopAfterRotation](1)[shiftRightAfterRotation](1),
+        ];
+
+      case ELEMENTS.PURPLE:
+        return [
+          anchor[shiftLeftAfterRotation](1),
+          anchor,
+          anchor[shiftRightAfterRotation](1),
+          anchor[shiftTopAfterRotation](1),
+        ];
+
+      case ELEMENTS.RED:
+        return [
+          anchor[shiftTopAfterRotation](1)[shiftLeftAfterRotation](1),
+          anchor[shiftTopAfterRotation](1),
+          anchor,
+          anchor[shiftRightAfterRotation](1),
+        ];
+    }
+
+
   }
 
   getFutureFigures = () => {
