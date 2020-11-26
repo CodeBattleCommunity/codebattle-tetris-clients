@@ -24,11 +24,11 @@ class LengthToXY {
   constructor(boardSize) {
     this.boardSize = boardSize;
   }
-  inversionY(y) {
+  inversionY = (y) => {
     return this.boardSize - 1 - y;
   }
 
-  getXY(length, element) {
+  getXY = (length, element) => {
     return length == -1
       ? null
       : new Point(
@@ -38,7 +38,7 @@ class LengthToXY {
         );
   }
 
-  getLength(x, y) {
+  getLength = (x, y) => {
     return this.inversionY(y) * this.boardSize + x;
   }
 }
@@ -48,24 +48,23 @@ class Board {
     this.board = board;
     this.boardSize = this.size() * this.size();
     this.lengthToXY = new LengthToXY(this.size());
-    this.isAt = this.isAt.bind(this);
   }
 
-  getAt(x, y) {
+  getAt = (x, y) => {
     return this.pt(x, y).isOutOf(this.size())
       ? Element.BORDER
       : this.board.layers[0].charAt(this.lengthToXY.getLength(x, y));
   }
 
-  pt(x, y) {
+  pt = (x, y) => {
     return new Point(x, y);
   }
 
-  isAt(x, y, element) {
+  isAt = (x, y, element) => {
     return this.getAt(x, y) == element ? true : false;
   }
 
-  get(elements) {
+  get = (elements) => {
     let result = [];
     for (let i = 0; i < this.boardSize; i++) {
       const point = this.lengthToXY.getXY(i);
@@ -79,7 +78,7 @@ class Board {
     return result;
   }
 
-  getFigures() {
+  getFigures = () => {
     return this.get([
         ELEMENTS.BLUE,
         ELEMENTS.CYAN,
@@ -91,25 +90,25 @@ class Board {
     ]);
   }
 
-  getFreeSpace() {
+  getFreeSpace = () => {
     return this.get([ELEMENTS.NONE]);
   }
 
-  getCurrentFigureType() {
+  getCurrentFigureType = () => {
     return this.board.currentFigureType;
   }
 
-  getCurrentFigurePosition() {
+  getCurrentFigurePosition = () => {
     const x = this.board.currentFigurePoint.x;
     const y = this.board.currentFigurePoint.y;
     return new Point(x, y, this.getAt(x, y));
   }
 
-  getFutureFigures() {
+  getFutureFigures = () => {
     return this.board.futureFigures;
   }
 
-  isNear(x, y, element) {
+  isNear = (x, y, element) => {
     return !this.pt(x, y).isOutOf(this.size())
       ? this.isAt(x + 1, y, element) ||
           this.isAt(x - 1, y, element) ||
@@ -118,11 +117,11 @@ class Board {
       : false;
   }
 
-  size() {
+  size = () => {
     return Math.sqrt(this.board.layers[0].length);
   }
 
-  getAllExtended() {
+  getAllExtended = () => {
     let result = [];
     for (let i = 0; i < this.boardSize; i++) {
       var point = this.lengthToXY.getXY(i, this.board.layers[0].charAt(i));
@@ -131,7 +130,7 @@ class Board {
     return result;
   }
 
-  toString() {
+  toString = () => {
     const currentFigurePoint = this.board.currentFigurePoint;
     const size = this.size();
     let result = `Current Figure Point: [${currentFigurePoint.x};${currentFigurePoint.y}]\nCurrent Figure Type: ${this.board.currentFigureType}\nFuture Figures:: ${this.board.futureFigures}\n`;
