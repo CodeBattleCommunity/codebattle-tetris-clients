@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6BE3FB99-3774-4DB0-A9A1-F3B5F0ECBCFA}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Tetris</RootNamespace>
+    <RootNamespace>TetrisClient</RootNamespace>
     <AssemblyName>Tetris</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -61,11 +61,13 @@
     <Compile Include="Command.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Element.cs" />
+    <Compile Include="FigureRotator.cs" />
     <Compile Include="JsonBoard.cs" />
     <Compile Include="LengthToXY.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rotation.cs" />
     <Compile Include="WebSocket.cs" />
     <Compile Include="YourSolver.cs" />
   </ItemGroup>
