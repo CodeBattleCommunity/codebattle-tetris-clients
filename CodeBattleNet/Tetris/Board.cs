@@ -373,6 +373,34 @@ namespace TetrisClient
 				.ToList();
 		}
 
+
+		#region Экспериментальные методы. Использовать осторожно!
+
+		/// <summary>
+		/// Позволяет определить координаты точек текущей фигуры после применения операции вращения к ней.
+		/// Поворот производится от исходного положения фигуры (в котором она появляется в стакане)!
+		/// </summary>
+		/// <param name="rotation">Поворот фигуры по часовой стрелке.</param>
+		/// <returns>Набор точек текущей фигуры с координатами после вращения данной фигуры.</returns>
+		public Point[] PredictCurrentFigurePoints(Rotation rotation = Rotation.CLOCKWIZE_0)
+		{
+			return FigureRotator.PredictCurrentFigurePoints(rotation, GetCurrentFigurePoint(), GetCurrentFigureType());
+		}
+
+		/// <summary>
+		/// Позволяет определить координаты точек текущей фигуры после применения операции вращения к ней.
+		/// Поворот производится от исходного положения фигуры (в котором она появляется в стакане)!
+		/// </summary>
+		/// <param name="figureAnchor">Точка - "якорь" фигуры.</param>
+		/// <param name="rotation">Поворот фигуры по часовой стрелке.</param>
+		/// <returns>Набор точек текущей фигуры с координатами после вращения данной фигуры.</returns>
+		public Point[] PredictCurrentFigurePoints(Point figureAnchor, Rotation rotation = Rotation.CLOCKWIZE_0)
+		{
+			return FigureRotator.PredictCurrentFigurePoints(rotation, figureAnchor, GetCurrentFigureType());
+		}
+
+		#endregion
+
 		/// <summary>
 		/// Получить строковое представление доски
 		/// </summary>

@@ -21,11 +21,11 @@
  */
 namespace TetrisClient
 {
-	public enum Direction : int
+	public enum Rotation : int
 	{
-		Up = 0,
-		Right = 1,
-		Down = 2,
-		Left = 3,
+		CLOCKWIZE_0 = 0,
+		CLOCKWIZE_90 = 1,
+		CLOCKWIZE_180 = 2,
+		CLOCKWIZE_270 = 3,
 	}
 }
