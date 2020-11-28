@@ -1,4 +1,7 @@
-## Клиент на python
+﻿## Инструкция
+За основу клиента был взят https://github.com/Permyak-Logy/TetrisBattle .
+
+### Клиент на python
 
 #### Подготовка virtualenv и установка зависимостей
 Чтобы начать работать потребуется Python 3.6 или выше. 
@@ -60,7 +63,34 @@
 ```
 
 2. Метод - **turn** в CodeBattlePython/tetris_client/__main__.py должен возвращать в качестве ответа
-один из ENUM вариантов CodeBattlePython/tetris_client/internals/tetris_action.py. 
+list из действий, которые вы хотите сделать - ENUM вариантов CodeBattlePython/tetris_client/internals/tetris_action.py. Чтобы отправить только одно действие - лист с 1 элементом.
+
+```python
+    # 1-в-1 пример также представлен в самом файле CodeBattlePython/tetris_client/__main__.py
+
+def turn(gcb: Board) -> TetrisAction:
+    # this function must return list actions from TetrisAction: tetris_client/internals/tetris_action.py
+    #     LEFT = 'left'
+    #     RIGHT = 'right'
+    #     DOWN = 'down'
+    #     ACT = 'act'
+    #     ACT_2 = 'act(2)'
+    #     ACT_3 = 'act(3),'
+    #     ACT_0_0 = 'act(0,0)'
+    # change return below to your code (right now its returns random aciton):
+    # код ниже является примером и сэмплом для демонстрации - после подстановки корректного URI к своей игре
+    # запустите клиент и посмотрите как отображаются изменения в UI игры и что приходит как ответ от API 
+    elem = gcb.get_current_figure_type()
+    print(gcb.get_future_figures())
+    print(gcb.get_current_figure_point()) 
+    print(gcb.get_current_figure_type())
+    print(gcb.find_element(elem))
+    actions = [x for x in TetrisAction if x != 'act(0,0)']
+    # return [TetrisAction.LEFT] - example how to send only one action, list with 1 element
+    return [TetrisAction.LEFT, random.choice(actions), random.choice(actions)]  # это те действия, которые выполнятся на игровом сервере в качестве вашего хода
+
+```
+
 
 Метод **turn** должен возвращать действие, которое вы планируете передать на Сервер в качестве хода. 
 
@@ -133,6 +163,7 @@
 
 
 ### Список методов API для работы с координатами, класс Point: 
+
 
 [tetris_client/internals/point.py](tetris_client/internals/point.py)
 

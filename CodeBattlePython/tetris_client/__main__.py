@@ -10,22 +10,25 @@ logging.basicConfig(format="%(asctime)s %(levelname)s:%(message)s", level=loggin
 
 
 def turn(gcb: Board) -> TetrisAction:
-    # this function must return one of the actions from TetrisAction: tetris_client/internals/tetris_action.py
+    # this function must return list actions from TetrisAction: tetris_client/internals/tetris_action.py
     #     LEFT = 'left'
     #     RIGHT = 'right'
     #     DOWN = 'down'
-    #     STOP = 'stop'
     #     ACT = 'act'
     #     ACT_2 = 'act(2)'
     #     ACT_3 = 'act(3),'
     #     ACT_0_0 = 'act(0,0)'
     # change return below to your code (right now its returns random aciton):
+    # код ниже является примером и сэмплом для демонстрации - после подстановки корректного URI к своей игре
+    # запустите клиент и посмотрите как отображаются изменения в UI игры и что приходит как ответ от API 
     elem = gcb.get_current_figure_type()
     print(gcb.get_future_figures())
     print(gcb.get_current_figure_point()) 
     print(gcb.get_current_figure_type())
     print(gcb.find_element(elem))
-    return random.choice(list(TetrisAction))
+    actions = [x for x in TetrisAction if x != 'act(0,0)']
+    # return [TetrisAction.LEFT] - example how to send only one action, list with 1 element
+    return [TetrisAction.LEFT, random.choice(actions), random.choice(actions)]  # это те действия, которые выполнятся на игровом сервере в качестве вашего хода
 
 
 def main(uri: Text):
