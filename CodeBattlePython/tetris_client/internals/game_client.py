@@ -27,20 +27,22 @@ class GameClient:
             on_open=lambda ws: self.on_open(ws),
         )
 
-    def run(self, on_turn=lambda a: TetrisAction.DOWN):
+    def run(self, on_turn=lambda a: [TetrisAction.DOWN]):
         self.on_turn = on_turn
         self.socket.run_forever()
 
     def on_message(self, ws, message):
         board = Board(message.lstrip("board="))
         board.print_board()
-        action = self.on_turn(board)
-        self.__send(action.value)
+        actions = self.on_turn(board)
+        self.__send(actions)
 
-    def __send(self, msg):
+    def __send(self, actions):
         logger.info("on_turn")
         logger.info(self.on_turn)
+        msg = ",".join([x.value for x in actions])
         logger.info("Sending: {}".format(msg))
+        
         self.socket.send(msg)
 
     def on_open(self, ws):
