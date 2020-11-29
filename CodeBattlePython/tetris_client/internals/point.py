@@ -1,4 +1,7 @@
-from typing import Tuple
+from typing import Tuple, Union
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Point:
@@ -34,12 +37,12 @@ class Point:
 
     # Returns new BoardPoint object shifted bottom "delta" points
     def shift_bottom(self, delta: int = 1):
-        return Point(self._x, self._y + delta)
+        return Point(self._x, self._y - delta)
 
     # Returns new BoardPoint object shifted top "delta" points
     def shift_top(self, delta: int = 1):
-        return Point(self._x, self._y - delta)
-    
+        return Point(self._x, self._y + delta)
+
     # Returns new BoardPoint object shifted right to "delta" pointst
     def shift_right(self, delta: int = 1):
         return Point(self._x + delta, self._y)
@@ -54,3 +57,15 @@ class Point:
         return (
             self._x >= board_size or self._y >= board_size or self._x < 0 or self._y < 0
         )
+
+
+def prepare_point(point: Union[Point, Tuple[int]]) -> Point:
+    try:
+        if not isinstance(point, Point):
+            point = Point(point[0], point[1])
+    except Exception as e:
+        logger.info(
+            "point argument must be a type of Point or Tuple with coordinats integers"
+        )
+        raise e
+    return point

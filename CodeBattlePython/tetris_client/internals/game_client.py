@@ -42,7 +42,7 @@ class GameClient:
         logger.info(self.on_turn)
         msg = ",".join([x.value for x in actions])
         logger.info("Sending: {}".format(msg))
-        
+
         self.socket.send(msg)
 
     def on_open(self, ws):
