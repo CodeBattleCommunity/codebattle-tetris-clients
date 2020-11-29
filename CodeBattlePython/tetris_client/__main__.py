@@ -26,8 +26,9 @@ def turn(gcb: Board) -> TetrisAction:
     print(gcb.get_current_figure_point())
     print(gcb.get_current_figure_type())
     print(gcb.find_element(elem))
+    # predict_figure_points_after_rotation - предсказывает положение фигуры после вращения
     print('rotate prediction: ', gcb.predict_figure_points_after_rotation(rotation=3))
-    actions = [x for x in TetrisAction if x != "act(0,0)"]
+    actions = [x for x in TetrisAction if x.value != "act(0,0)"]
     # return [TetrisAction.LEFT] - example how to send only one action, list with 1 element
     return [
         TetrisAction.LEFT,

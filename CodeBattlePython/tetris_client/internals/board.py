@@ -87,7 +87,7 @@ class Board:
         x: int = None,
         y: int = None,
         figure: Union[Element, Text] = None,
-        rotation: int = 0,
+        rotation: int = 0
     ):
         # x, y - координата приходящая с сервера в 'currentFigurePoint' содержит координату новой фигурки.
         # [0, 0] - левый нижний угол фигуры

@@ -16,7 +16,6 @@ class GameClient:
         path = url.replace("http", "ws")
         path = path.replace("board/player/", "ws?user=")
         path = path.replace("?code=", "&code=")
-
         logger.info("connecting... {}".format(path))
         websocket.enableTrace(True)
         self.socket = websocket.WebSocketApp(
@@ -38,11 +37,8 @@ class GameClient:
         self.__send(actions)
 
     def __send(self, actions):
-        logger.info("on_turn")
-        logger.info(self.on_turn)
         msg = ",".join([x.value for x in actions])
         logger.info("Sending: {}".format(msg))
-
         self.socket.send(msg)
 
     def on_open(self, ws):
