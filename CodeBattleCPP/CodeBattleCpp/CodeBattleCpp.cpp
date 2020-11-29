@@ -8,7 +8,7 @@ void main()
 {
 	srand(time(0));
 
-	GameClientTetris *gcb = new GameClientTetris("http://epruryaw0537.moscow.epam.com/codenjoy-contest/board/player/9sahhltizo730tp22kr1?code=7816623675811590848&gameName=tetris");
+	GameClientTetris *gcb = new GameClientTetris("http://localhost:8080/codenjoy-contest/board/player/9sahhltizo730tp22kr1?code=7816623675811590848&gameName=tetris");
 	gcb->Run([&]()
 	{
 			//write down code here
