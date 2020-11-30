@@ -24,6 +24,9 @@ package com.codenjoy.dojo.tetris.client;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UrlParser {
     public static final String WSS_PROTOCOL = "wss";
@@ -35,36 +38,35 @@ public class UrlParser {
     public String code;
     public String userName;
     public String context;
-    public String game;
 
     public UrlParser(String uri) {
         try {
             URL url = new URL(uri);
-            if (url.getQuery() == null) {
+            String query = url.getQuery();
+            if (query == null) {
                 throw badUrl();
             }
-            String[] queryParts = url.getQuery().split("[=&]");
+            Map<String, String> queryParts = Stream.of(query.split("&"))
+                    .map(p -> p.split("="))
+                    .collect(Collectors.toMap(p -> p[0], p -> p[1]));
             String[] urlParts = url.getPath().split("\\/");
             if (urlParts.length != 5
                     || !urlParts[0].equals("")
                     || !urlParts[2].equals("board")
                     || !urlParts[3].equals("player")
-                    || queryParts.length != 4
-                    || !queryParts[0].equals("code")
-                    || !queryParts[2].equals("gameName")) {
+                    || queryParts.get("code") == null) {
                 throw badUrl();
             }
 
             protocol = (url.getProtocol().equals(HTTPS_PROTOCOL)) ? WSS_PROTOCOL : WS_PROTOCOL;
             server = url.getHost() + portPart(url.getPort());
-            code = queryParts[1];
-            game = queryParts[3];
+            code = queryParts.get("code");
             userName = urlParts[4];
             context = urlParts[1];
         } catch (MalformedURLException e) {
             throw new RuntimeException("Please set url in format " +
                     "'http://codenjoyDomainOrIP:8080/codenjoy-contest/" +
-                    "board/player/3edq63tw0bq4w4iem7nb?code=12345678901234567890&gameName=game'",
+                    "board/player/3edq63tw0bq4w4iem7nb?code=12345678901234567890'",
                     e);
         }
     }
@@ -85,7 +87,6 @@ public class UrlParser {
                 ", code='" + code + '\'' +
                 ", userName='" + userName + '\'' +
                 ", context='" + context + '\'' +
-                ", game='" + game + '\'' +
                 '}';
     }
 }
