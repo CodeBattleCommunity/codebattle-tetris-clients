@@ -20,8 +20,10 @@
  * #L%
  */
 
+// Порядок изменения сдвигов точки при вращении.
 const SHIFT_ORDER = ['shiftTop', 'shiftRight', 'shiftBottom', 'shiftLeft'];
 
+// Получение типа сдвига точки относительно якоря при определенном вращении
 const getShiftAfterRotation = (shiftType, rotation = 0) => {
   if (!rotation) {
     return shiftType;
@@ -117,12 +119,20 @@ class Board {
     return new Point(x, y, this.getAt(x, y));
   }
 
+  // Метод для получения всех точек фигуры при ее расположении в заданой координате с заданным поворотом.
+  // Если не задавать координаты, то будут браться координаты текущего положения движущейся фигуры
+  // Если не задавать вращение, то оно будет равно 0
   predictCurrentFigurePoints = ({ rotation = 0, x = this.board.currentFigurePoint.x, y = this.board.currentFigurePoint.y } = {}) => {
+    // Получение якоря фигуры
     const anchor = new Point(x, y, this.board.currentFigureType);
+    
+    // Получение актуальных значений типов сдвигов на основании заданного поворота
     const shiftTopAfterRotation = getShiftAfterRotation('shiftTop', rotation);
     const shiftRightAfterRotation = getShiftAfterRotation('shiftRight', rotation);
     const shiftBottomAfterRotation = getShiftAfterRotation('shiftBottom', rotation);
     const shiftLeftAfterRotation = getShiftAfterRotation('shiftLeft', rotation);
+    
+    // Получение точек фигуры по ее типу
     
     switch(this.board.currentFigureType) {
       case ELEMENTS.BLUE: 
