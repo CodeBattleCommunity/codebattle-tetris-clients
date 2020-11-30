@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-var Point = function (x, y, element) {
+const Point = function (x, y, element) {
     /**
      * type {Point}
      */
@@ -81,6 +81,3 @@ var Point = function (x, y, element) {
         }
     }
 };
-
-
-if (module) module.exports = Point;

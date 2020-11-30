@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-var Element = {
+const ELEMENTS = {
 
     BLUE    :'I',
     CYAN    :'J',
@@ -33,6 +33,3 @@ var Element = {
     BORDER  : '#'
 
 };
-
-if(module) module.exports = Element;
-
