@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoardPoint.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandBuilder.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="easywsclient\easywsclient.hpp" />
@@ -28,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoardPoint.cpp" />
+    <ClCompile Include="CommandBuilder.cpp" />
     <ClCompile Include="easywsclient\easywsclient.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameClientTetris.cpp" />

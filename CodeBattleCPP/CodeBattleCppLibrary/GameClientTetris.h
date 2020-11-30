@@ -40,7 +40,7 @@ public:
 	~GameClientTetris();
 
 	void Run(std::function<void()> _message_handler);
-	void LoderunnerAction(std::string action = "") {
+	void sendAction(std::string action = "") {
 		send(action);
 	}
 	GameBoard* get_GameBoard() { return board; }

@@ -1,0 +1,10 @@
+#pragma once
+enum class Command {
+	LEFT,
+	RIGHT,
+	DOWN,
+	ROTATE_CLOCKWISE_90,
+	ROTATE_CLOCKWISE_180,
+	ROTATE_CLOCKWISE_270,
+	SUICIDE
+};
