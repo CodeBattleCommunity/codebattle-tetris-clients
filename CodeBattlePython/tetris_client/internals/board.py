@@ -1,9 +1,8 @@
 from math import sqrt
 
-from tetris_client.internals.element import Element
-from tetris_client.internals.point import Point
-from tetris_client.internals.utils import prepare_element, prepare_point
-from typing import Optional, Tuple, List, Union
+from tetris_client.internals.element import Element, prepare_element
+from tetris_client.internals.point import Point, prepare_point
+from typing import Optional, Tuple, List, Union, Text
 import json
 
 
@@ -54,12 +53,17 @@ class Board:
     def get_future_figures(self) -> List[str]:
         return self._json["futureFigures"]
 
+    def get_current_element(self) -> Element:
+        return Element(self._json["currentFigureType"])
+
     def get_element_at(self, point: Union[Point, Tuple[int]]) -> Element:
         """ Return an Element object at coordinates x,y."""
         point = prepare_point(point)
         return Element(self._layer[self._xy2strpos(point.get_x(), point.get_y())])
 
-    def is_element_at(self, point: Union[Point,  Tuple[int]], element_object: Union[Element, str]) -> bool:
+    def is_element_at(
+        self, point: Union[Point, Tuple[int]], element_object: Union[Element, str]
+    ) -> bool:
         point = prepare_point(point)
         element_object
         if point.is_out_of_board(self._size):
@@ -77,6 +81,27 @@ class Board:
     def get_shift_by_point(self, point: Union[Point, Tuple[int]]) -> int:
         point = prepare_point(point)
         return point.get_y() * self._size + point.get_x()
+
+    def predict_figure_points_after_rotation(
+        self,
+        x: int = None,
+        y: int = None,
+        figure: Union[Element, Text] = None,
+        rotation: int = 0
+    ):
+        # x, y - координата приходящая с сервера в 'currentFigurePoint' содержит координату новой фигурки.
+        # [0, 0] - левый нижний угол фигуры
+        # be aware: this method is experemental and can cause issues in edge cases
+        # метод возвращает все точки Фигуры при rotation (1 == 90 градусам)
+        # подробнее про rotation в методе get_shift_after_rotation
+        if not x or not y or not figure:
+            anchor: Point = self.get_current_figure_point()
+            figure: Element = self.get_current_element()
+        else:
+            anchor: Point = Point(x, y)
+            figure: Element = prepare_element(type_)
+
+        return figure.get_all_coords_after_rotation(anchor, rotation)
 
     def _strpos2pt(self, strpos: int) -> Point:
         return Point(*self._strpos2xy(strpos))
@@ -97,6 +122,6 @@ class Board:
                 for i in range(0, self._len, self._size)
             ]
         )
-        
+
     def to_string(self) -> str:
         return str(self)

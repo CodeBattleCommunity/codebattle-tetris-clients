@@ -20,15 +20,21 @@ def turn(gcb: Board) -> TetrisAction:
     #     ACT_0_0 = 'act(0,0)'
     # change return below to your code (right now its returns random aciton):
     # код ниже является примером и сэмплом для демонстрации - после подстановки корректного URI к своей игре
-    # запустите клиент и посмотрите как отображаются изменения в UI игры и что приходит как ответ от API 
+    # запустите клиент и посмотрите как отображаются изменения в UI игры и что приходит как ответ от API
     elem = gcb.get_current_figure_type()
     print(gcb.get_future_figures())
-    print(gcb.get_current_figure_point()) 
+    print(gcb.get_current_figure_point())
     print(gcb.get_current_figure_type())
     print(gcb.find_element(elem))
-    actions = [x for x in TetrisAction if x != 'act(0,0)']
+    # predict_figure_points_after_rotation - предсказывает положение фигуры после вращения
+    print('rotate prediction: ', gcb.predict_figure_points_after_rotation(rotation=3))
+    actions = [x for x in TetrisAction if x.value != "act(0,0)"]
     # return [TetrisAction.LEFT] - example how to send only one action, list with 1 element
-    return [TetrisAction.LEFT, random.choice(actions), random.choice(actions)]  # это те действия, которые выполнятся на игровом сервере в качестве вашего хода
+    return [
+        TetrisAction.LEFT,
+        random.choice(actions),
+        random.choice(actions),
+    ]  # это те действия, которые выполнятся на игровом сервере в качестве вашего хода
 
 
 def main(uri: Text):
