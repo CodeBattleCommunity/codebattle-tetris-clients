@@ -26,6 +26,7 @@ package com.codenjoy.dojo.tetris.client;
 import com.codenjoy.dojo.client.AbstractJsonSolver;
 import com.codenjoy.dojo.client.WebSocketRunner;
 import com.codenjoy.dojo.services.Dice;
+import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.RandomDice;
 
 /**
@@ -44,13 +45,13 @@ public class YourSolver extends AbstractJsonSolver<Board> {
 
     @Override
     public String getAnswer(Board board) {
-        return "DOWN";
+        return Direction.random(dice).toString();
     }
 
     public static void main(String[] args) {
         WebSocketRunner.runClient(
                 // paste here board page url from browser after registration
-                new UrlWrapper().removeTrailingParameters("http://localhost:8080/codenjoy-contest/board/player/ziwpjz46y4z5567k7uup?code=3867579515136108220&gameName=tetris"),
+                "http://localhost:8080/codenjoy-contest/board/player/ziwpjz46y4z5567k7uup?code=3867579515136108220&gameName=tetris",
                 new YourSolver(new RandomDice()),
                 new Board());
     }
