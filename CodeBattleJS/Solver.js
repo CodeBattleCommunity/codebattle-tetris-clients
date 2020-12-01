@@ -20,16 +20,29 @@
  * #L%
  */
 class Solver {
-  /**
-  //* @return next hero action
-  //*/
   constructor(DIRECTIONS, ELEMENTS) {
     this.directions = DIRECTIONS;
     this.elements = ELEMENTS;
+    this.actions = [];
   }
+
+  /**
+   * 
+   * @param {string} direction value of this.directions
+   * @param {number} count actions count
+   * @example `addActionStep(this.directions.RIGHT, 3)` will add 'RIGHT, RIGHT, RIGHT' to the result
+  */
+
+  addActionStep(direction, count = 1) {
+    this.actions = [...this.actions, ...Array(count).fill(direction)];
+  }
+
+  /**
+    * @return string with action steps divided by comma with space
+  */
+  
   get(board) {
     // TODO your code here
-
-    return this.directions.DOWN;
+    return this.actions.join(', ');
   }
 }
