@@ -159,8 +159,6 @@ def turn(gcb: Board) -> TetrisAction:
 
 **get_element_at(point: Union[Point, Tuple(int)])** - возвращает фигуру (объект класса Element), находящуюся на доске в переданных координатах
 
-**has_element_at(point: Union[Point, Tuple(int)])** - проверяет есть ли в указанных координатах фигура
-
 **is_element_at(point: Union[Point, Tuple(int)], element_object: Union[Element, str])** - проверяет соответствует ли фигура в 'element_object' фигуре на доске в указанных координатах
 
 **predict_figure_points_after_rotation(x: int = None, y: int = None, figure: Union[Element, Text] = None, rotation: int = 0)** - если не передавать x, y или figure, то метод работает с текущей фигурой. Rotate - количество вращений, которые необходимо сделать с фигурой - 0 фигура не вращается, метод в ответ возвращает все координаты фигуры (всех её частей, а не только "якорной" точки вокруг которой совершается вращение), rotation = 1 - поворот на 90 градусов, rotation = 2 - координаты при повороте фигуры на 180 градусов и т.д. 
