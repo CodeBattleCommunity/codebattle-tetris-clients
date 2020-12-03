@@ -1,7 +1,5 @@
 package com.codenjoy.dojo.services;
 
-import com.codenjoy.dojo.services.Direction;
-
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -94,13 +92,6 @@ public interface Point extends Comparable<Point> {
      * @param delta Increment.
      */
     void change(Point delta);
-
-    /**
-     * Changes current point in given direction
-     * 
-     * @param direction one of 4 directions
-     */
-    void change(Direction direction);
 
     /**
      * @param offset

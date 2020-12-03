@@ -1,5 +1,10 @@
 package com.codenjoy.dojo.tetris.client;
 
+import static java.util.stream.Collectors.toList;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -22,11 +27,10 @@ package com.codenjoy.dojo.tetris.client;
  * #L%
  */
 
-
 import com.codenjoy.dojo.client.AbstractJsonSolver;
 import com.codenjoy.dojo.client.WebSocketRunner;
+import com.codenjoy.dojo.services.Command;
 import com.codenjoy.dojo.services.Dice;
-import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.RandomDice;
 
 /**
@@ -45,12 +49,24 @@ public class YourSolver extends AbstractJsonSolver<Board> {
 
     @Override
     public String getAnswer(Board board) {
-        return Direction.random(dice).toString();
+        List<Command> answerList = getAnswerList(board);
+        List<String> stringList = answerList.stream().map(d -> d.toString()).collect(toList());
+        return String.join(", ", stringList);
+    }
+
+    private List<Command> getAnswerList(Board board) {
+        System.out.println(board.getGlass().getAt(board.getCurrentFigurePoint()));
+        List<Command> result = new ArrayList<Command>();
+        result.add(Command.LEFT);
+        result.add(Command.random(dice));
+        result.add(Command.ROTATE_CLOCKWISE_180);
+
+        return result;
     }
 
     public static void main(String[] args) {
         WebSocketRunner.runClient(
-                // paste here board page url from browser after registration
+                // скопируйте сюда адрес из браузера, на который перейдете после регистрации/логина
                 "http://localhost:8080/codenjoy-contest/board/player/ziwpjz46y4z5567k7uup?code=3867579515136108220&gameName=tetris",
                 new YourSolver(new RandomDice()),
                 new Board());

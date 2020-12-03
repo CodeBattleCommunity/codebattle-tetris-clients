@@ -26,6 +26,8 @@ package com.codenjoy.dojo.client;
 import com.codenjoy.dojo.services.printer.CharElements;
 import com.codenjoy.dojo.services.Point;
 
+import static com.codenjoy.dojo.services.PointImpl.pt;
+
 import java.util.*;
 
 public abstract class AbstractBoard<E extends CharElements> extends AbstractLayeredBoard<E> {
@@ -42,6 +44,7 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
     }
 
     /**
+     * Список точек, соответствующих заданному типу
      * @param elements List of elements that we try to find.
      * @return All positions of element specified.
      */
@@ -54,11 +57,11 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
     }
 
     /**
-     * Says if at given position (X, Y) at given layer has given element.
-     * @param x X coordinate.
-     * @param y Y coordinate.
-     * @param element Elements that we try to detect on this point.
-     * @return true is element was found.
+     * Проверяет, находится ли на данной позиции (X, Y) элемент соответствуюего типа.
+     * @param x координата X.
+     * @param y координата Y.
+     * @param element тип элемента.
+     * @return true если находится.
      */
     public boolean isAt(int x, int y, E element) {
         for (int layer = 0; layer < countLayers(); ++layer) {
@@ -69,10 +72,22 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
         return false;
     }
 
+    /**
+     * Проверяет, находится ли на данной позиции (X, Y) элемент соответствуюего типа.
+     * @param point точка.
+     * @param element тип элемента.
+     * @return true если находится.
+     */
     public boolean isAt(Point point, E element) {
         return isAt(point.getX(), point.getY(), element);
     }
 
+    /**
+     * Возвращает тип элемента на данной позиции (X, Y).
+     * @param x координата X.
+     * @param y координата Y.
+     * @return тип элемента.
+     */
     public E getAt(int x, int y) {
         List<E> at = getAllAt(x, y);
         if (at.isEmpty()) {
@@ -82,23 +97,32 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
         }
     }
 
+    /**
+     * Возвращает тип элемента на данной позиции (X, Y).
+     * @param point точка.
+     * @return тип элемента.
+     */
     public E getAt(Point point) {
         return getAt(point.getX(), point.getY());
     }
 
-    public List<E> getAllAt(int x, int y) {
+    
+    private List<E> getAllAt(int x, int y) {
         List<E> result = new LinkedList<>();
+        if (!pt(x, y).isOutOf(size)) {
+            return result;
+        }
         for (int layer = 0; layer < countLayers(); ++layer) {
             result.add(getAt(layer, x, y));
         }
         return result;
     }
 
-    public List<E> getAllAt(Point point) {
+    protected List<E> getAllAt(Point point) {
         return getAllAt(point.getX(), point.getY());
     }
 
-    public String boardAsString() {
+    protected String boardAsString() {
         StringBuffer result = new StringBuffer();
         for (int layer = 0; layer < countLayers(); ++layer) {
             if (layer > 0) {
@@ -110,11 +134,11 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
     }
 
     /**
-     * Says if at given position (X, Y) at given layer has given elements.
-     * @param x X coordinate.
-     * @param y Y coordinate.
-     * @param elements List of elements that we try to detect on this point.
-     * @return true is any of this elements was found.
+     * Проверяет, находится ли на данной позиции (X, Y) элемент одного из типов.
+     * @param x координата X.
+     * @param y координата Y.
+     * @param element типы элемента.
+     * @return true если находится.
      */
     public boolean isAt(int x, int y, E... elements) {
         for (int layer = 0; layer < countLayers(); ++layer) {
@@ -125,16 +149,22 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
         return false;
     }
 
+    /**
+     * Проверяет, находится ли на данной позиции (X, Y) элемент одного из типов.
+     * @param point точка.
+     * @param element типы элемента.
+     * @return true если находится.
+     */
     public boolean isAt(Point point, E... elements) {
         return isAt(point.getX(), point.getY(), elements);
     }
 
     /**
-     * Says if near (at left, at right, at up, at down) given position (X, Y) at given layer exists given element.
-     * @param x X coordinate.
-     * @param y Y coordinate.
-     * @param element Element that we try to detect on near point.
-     * @return true is element was found.
+     * Проверяет, находится ли рядом с данной позицией (X, Y) элемент одного из типов.
+     * @param x координата X.
+     * @param y координата Y.
+     * @param element типы элемента.
+     * @return true если находится.
      */
     public boolean isNear(int x, int y, E element) {
         for (int layer = 0; layer < countLayers(); ++layer) {
@@ -145,17 +175,22 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
         return false;
     }
 
+    /**
+     * Проверяет, находится ли рядом с данной позицией (X, Y) элемент одного из типов.
+     * @param point точка.
+     * @param element типы элемента.
+     * @return true если находится.
+     */
     public boolean isNear(Point point, E element) {
         return isNear(point.getX(), point.getY(), element);
     }
 
     /**
-     * @param x X coordinate.
-     * @param y Y coordinate.
-     * @param element Element that we try to detect on near point.
-     * @return Returns count of elements with type specified near
-     * (at left, right, down, up, left-down, left-up,
-     *     right-down, right-up) {x,y} point.
+     * Считает число элементов рядом с данной позицией (X, Y) элемент одного из типов.
+     * @param x координата X.
+     * @param y координата Y.
+     * @param element типы элемента.
+     * @return колличество.
      */
     public int countNear(int x, int y, E element) {
         int count = 0;
@@ -167,15 +202,22 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
         return count;
     }
 
+    /**
+     * Считает число элементов рядом с данной позицией (X, Y) элемент одного из типов.
+     * @param point точка.
+     * @param element типы элемента.
+     * @return колличество.
+     */
     public int countNear(Point point, E element){
         return countNear(point.getX(), point.getY(), element);
     }
 
     /**
-     * @param x X coordinate.
-     * @param y Y coordinate.
-     * @return All elements around (at left, right, down, up,
-     *     left-down, left-up, right-down, right-up) position.
+     * Возвращает список элементов рядом с данной позицией (X, Y) элемент одного из типов.
+     * @param x координата X.
+     * @param y координата Y.
+     * @param element типы элемента.
+     * @return список элементов.
      */
     public List<E> getNear(int x, int y) {
         List<E> result = new LinkedList<E>();
@@ -186,7 +228,12 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
 
         return result;
     }
-
+    /**
+     * Возвращает список элементов рядом с данной позицией (X, Y) элемент одного из типов.
+     * @param point точка.
+     * @param element типы элемента.
+     * @return список элементов.
+     */
     public List<E> getNear(Point point) {
         return getNear(point.getX(), point.getY());
     }
