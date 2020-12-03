@@ -136,11 +136,6 @@ public class PointImpl implements Point, Comparable<Point> {
         y += delta.getY();
     }
 
-    @Override
-    public void change(Direction direction) {
-        this.move(direction.change(this));
-    }
-
     public static Point pt(int x, int y) {
         return new PointImpl(x, y);
     }

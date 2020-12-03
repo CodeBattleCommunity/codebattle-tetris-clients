@@ -40,10 +40,20 @@ public class GlassBoard extends AbstractBoard<Elements> {
         return size() - 1 - y;
     }
 
+    /** 
+     * Позволяет узнать, пуста ли данная точка
+     * @param x x
+     * @param y y
+     * @return true если пуста
+     */
     public boolean isFree(int x, int y) {
         return isAt(x, y, Elements.NONE);
     }
 
+    /**
+     * Список координат занятых ячеек
+     * @return
+     */
     public List<Point> getFigures() {
         return get(
                 Elements.BLUE,
@@ -56,6 +66,10 @@ public class GlassBoard extends AbstractBoard<Elements> {
         );
     }
 
+    /**
+     * Список координат свободных ячеек
+     * @return
+     */
     public List<Point> getFreeSpace() {
         return get(Elements.NONE);
     }

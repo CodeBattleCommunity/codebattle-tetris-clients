@@ -41,6 +41,10 @@ import static com.codenjoy.dojo.services.PointImpl.pt;
  */
 public class Board extends AbstractTextBoard {
 
+    /**
+     * Возвращает позицию якорной точки текущей фигуры
+     * @return
+     */
     public Point getCurrentFigurePoint() {
         JSONObject point = getJson().getJSONObject("currentFigurePoint");
         int x = point.getInt("x");
@@ -48,6 +52,10 @@ public class Board extends AbstractTextBoard {
         return pt(x, y);
     }
 
+    /**
+     * Возвращает тип текущей фигуры
+     * @return
+     */
     public Elements getCurrentFigureType() {
         if (!getJson().has("currentFigureType")) {
             return null;
@@ -56,6 +64,10 @@ public class Board extends AbstractTextBoard {
         return getElement(figureType);
     }
 
+    /**
+     * Возвращает список следующих фигур
+     * @return
+     */
     public List<Elements> getFutureFigures() {
         List<Elements> result = new LinkedList<>();
         for (Object figure : getJson().getJSONArray("futureFigures")) {
@@ -68,6 +80,10 @@ public class Board extends AbstractTextBoard {
         return new JSONObject(data);
     }
 
+    /**
+     * Возвращает объект стакана, позволяющий вычислять дополнительную информацию о игровом поле
+     * @return
+     */
     public GlassBoard getGlass() {
         String glassString = getJson().getJSONArray("layers").getString(0);
         return (GlassBoard) new GlassBoard().forString(glassString);
