@@ -109,7 +109,7 @@ public abstract class AbstractBoard<E extends CharElements> extends AbstractLaye
     
     private List<E> getAllAt(int x, int y) {
         List<E> result = new LinkedList<>();
-        if (!pt(x, y).isOutOf(size)) {
+        if (pt(x, y).isOutOf(size)) {
             return result;
         }
         for (int layer = 0; layer < countLayers(); ++layer) {
