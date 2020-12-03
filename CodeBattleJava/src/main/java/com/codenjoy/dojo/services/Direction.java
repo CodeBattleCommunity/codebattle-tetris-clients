@@ -24,7 +24,9 @@ package com.codenjoy.dojo.services;
 
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.codenjoy.dojo.services.PointImpl.pt;
 
@@ -38,6 +40,7 @@ public enum Direction {
     private final int value;
     private final int dx;
     private final int dy;
+    private List<Direction> chain = new LinkedList<>();
 
     Direction(int value, int dx, int dy) {
         this.value = value;
@@ -105,7 +108,13 @@ public enum Direction {
     }
 
     public String toString() {
-        return this.name();
+        if (this.chain.isEmpty()) {
+            return this.name();
+        }
+        List<String> commands = this.chain.stream()
+                .map(Direction::name)
+                .collect(Collectors.toList());
+        return String.join(",", commands);
     }
 
     /**
@@ -165,5 +174,13 @@ public enum Direction {
 
     public static List<Direction> onlyDirections() {
         return Arrays.asList(LEFT, RIGHT, UP, DOWN);
+    }
+
+    public Direction then(Direction direction) {
+        if (this.chain.isEmpty()) {
+            this.chain.add(this);
+        }
+        this.chain.add(direction);
+        return this;
     }
 }
