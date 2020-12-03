@@ -1,3 +1,5 @@
+package com.codenjoy.dojo.client;
+
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -19,17 +21,32 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package board
 
-const (
-	I_BLUE = "I"
-	J_CYAN = "J"
-	L_ORANGE = "L"
-	O_YELLOW = "O"
-	S_GREEN = "S"
-	T_PURPLE = "T"
-	Z_RED = "Z"
-	NONE = "."
-)
 
-var FIGURES = []string { I_BLUE, J_CYAN, L_ORANGE, O_YELLOW, S_GREEN, T_PURPLE, Z_RED }
+import com.codenjoy.dojo.utils.JsonUtils;
+import com.codenjoy.dojo.utils.UnicodeUtils;
+import org.apache.commons.lang3.StringUtils;
+
+public abstract class AbstractTextBoard implements ClientBoard {
+
+    protected String data;
+
+    @Override
+    public ClientBoard forString(String data) {
+        this.data = UnicodeUtils.unescapeJava(data);
+        return this;
+    }
+
+    public boolean isGameOver() {
+        return StringUtils.isEmpty(data);
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardData " + JsonUtils.prettyPrint(data);
+    }
+}

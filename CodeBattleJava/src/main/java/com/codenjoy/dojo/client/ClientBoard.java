@@ -1,3 +1,5 @@
+package com.codenjoy.dojo.client;
+
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -19,11 +21,8 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package board
 
-type Question struct {
-	CurrentFigureType	string
-	FutureFigures         []string
-	CurrentFigurePoint     Point
-	Layers        []string
+
+public interface ClientBoard {
+    ClientBoard forString(String input);
 }

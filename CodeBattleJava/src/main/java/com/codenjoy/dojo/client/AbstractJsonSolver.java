@@ -1,8 +1,10 @@
+package com.codenjoy.dojo.client;
+
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
- * Copyright (C) 2018 - 2020 Codenjoy
+ * Copyright (C) 2018 Codenjoy
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -19,30 +21,21 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-class Solver {
-  constructor(DIRECTIONS, ELEMENTS) {
-    this.directions = DIRECTIONS;
-    this.elements = ELEMENTS;
-    this.actions = [];
-  }
 
-  /**
-   * 
-   * @param {string} direction value of this.directions
-   * @param {number} count actions count
-   * @example `addActionStep(this.directions.RIGHT, 3)` will add 'RIGHT, RIGHT, RIGHT' to the result
-  */
+public abstract class AbstractJsonSolver<T extends AbstractTextBoard> implements Solver<AbstractTextBoard> {
 
-  addActionStep(direction, count = 1) {
-    this.actions = [...this.actions, ...Array(count).fill(direction)];
-  }
+    private AbstractTextBoard board;
 
-  /**
-    * @return string with action steps divided by comma with space
-  */
-  
-  get(board) {
-    // TODO your code here
-    return this.actions.join(', ');
-  }
+    public abstract String getAnswer(T board);
+
+    @Override
+    public String get(AbstractTextBoard board) {
+        this.board = board;
+        if (board.isGameOver()) return "";
+
+        String answer = getAnswer((T)board);
+
+        return answer;
+    }
+
 }

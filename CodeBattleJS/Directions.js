@@ -20,68 +20,11 @@
  * #L%
  */
 
-const D = (index, dx, dy, name, next) => {
-  const combine = (direction) => D(index, 0, 0, toString(), direction);
-
-  const changeX = (x) => x + dx;
-
-  const changeY = (y) => y - dy;
-
-  const toString = () => (next ? name + ", " + next.toString() : name);
-
-  const inverted = function () {
-    switch (this) {
-      case DIRECTIONS.UP:
-        return DIRECTIONS.DOWN;
-      case DIRECTIONS.DOWN:
-        return DIRECTIONS.UP;
-      case DIRECTIONS.LEFT:
-        return DIRECTIONS.RIGHT;
-      case DIRECTIONS.RIGHT:
-        return DIRECTIONS.LEFT;
-      case DIRECTIONS.ROTATE_270:
-        return DIRECTIONS.ROTATE_90;
-      case DIRECTIONS.ROTATE_90:
-        return DIRECTIONS.ROTATE_270;
-      case DIRECTIONS.STOP:
-        return DIRECTIONS.ROTATE_180;
-      default:
-        return DIRECTIONS.STOP;
-    }
-  };
-
-  const getIndex = () => index;
-
-  return {
-    combine,
-    changeX,
-    changeY,
-    inverted,
-    toString,
-    getIndex,
-  };
-};
-
 const DIRECTIONS = {
-  DOWN: D(0, 0, 1, "DOWN"),
-  LEFT: D(1, -1, 0, "LEFT"),
-  RIGHT: D(2, 1, 0, "RIGHT"),
-  STOP: D(5, 0, 0, ""),
-  ROTATE_90: D(6, 0, 0, "act"),
-  ROTATE_180: D(7, 0, 0, "act(2)"),
-  ROTATE_270: D(8, 0, 0, "act(3)"),
+  DOWN: 'DOWN',
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT',
+  ROTATE_90: 'act',
+  ROTATE_180: 'act(2)',
+  ROTATE_270: 'act(3)',
 };
-
-DIRECTIONS.values = function () {
-  return [
-    DIRECTIONS.DOWN,
-    DIRECTIONS.LEFT,
-    DIRECTIONS.RIGHT,
-    DIRECTIONS.ROTATE_90,
-    DIRECTIONS.ROTATE_180,
-    DIRECTIONS.ROTATE_270,
-  ];
-};
-
-DIRECTIONS.valueOf = (index) =>
-  DIRECTIONS.values().find((direction) => direction.getIndex() === index);

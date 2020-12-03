@@ -22,9 +22,10 @@ package com.codenjoy.dojo.tetris.client;
  * #L%
  */
 
-
 import com.codenjoy.dojo.client.AbstractTextBoard;
+import com.codenjoy.dojo.services.FigureRotator;
 import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.Rotation;
 import com.codenjoy.dojo.tetris.model.Elements;
 import org.json.JSONObject;
 
@@ -34,9 +35,9 @@ import java.util.List;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 
 /**
- * Класс, обрабатывающий строковое представление доски в виде JSON.
- * Содержит ряд унаследованных методов {@see AbstractTextBoard},
- * но ты можешь добавить сюда любые свои методы на их основе.
+ * Класс, обрабатывающий строковое представление доски в виде JSON. Содержит ряд
+ * унаследованных методов {@see AbstractTextBoard}, но ты можешь добавить сюда
+ * любые свои методы на их основе.
  */
 public class Board extends AbstractTextBoard {
 
@@ -58,7 +59,7 @@ public class Board extends AbstractTextBoard {
     public List<Elements> getFutureFigures() {
         List<Elements> result = new LinkedList<>();
         for (Object figure : getJson().getJSONArray("futureFigures")) {
-            result.add(getElement((String)figure));
+            result.add(getElement((String) figure));
         }
         return result;
     }
@@ -76,4 +77,62 @@ public class Board extends AbstractTextBoard {
         char ch = figureType.charAt(0);
         return Elements.valueOf(ch);
     }
+
+    /**
+     * Позволяет определить координаты точек текущей фигуры после применения
+     * операции вращения к ней. Поворот производится от исходного положения фигуры
+     * (в котором она появляется в стакане)!
+     * 
+     * Экспериментальный метод. Использовать осторожно!
+     * 
+     * @param rotation Поворот фигуры по часовой стрелке.
+     * @return Набор точек текущей фигуры с координатами после вращения данной
+     *         фигуры.
+     */
+    public Point[] predictCurrentFigurePoints(Rotation rotation) {
+        return predictCurrentFigurePoints(getCurrentFigurePoint(), rotation);
+    }
+
+    /**
+     * Позволяет определить координаты точек текущей фигуры в исходном положении. (в
+     * котором она появляется в стакане)!
+     * 
+     * Экспериментальный метод. Использовать осторожно!
+     * 
+     * @return Набор точек текущей фигуры с координатами после вращения данной
+     *         фигуры.
+     */
+    public Point[] predictCurrentFigurePoints() {
+        return predictCurrentFigurePoints(Rotation.CLOCKWIZE_0);
+    }
+
+    /**
+     * Позволяет определить координаты точек текущей фигуры после применения
+     * операции вращения к ней. Поворот производится от исходного положения фигуры
+     * (в котором она появляется в стакане)!
+     * 
+     * Экспериментальный метод. Использовать осторожно!
+     * 
+     * @param rotation Поворот фигуры по часовой стрелке.
+     * @return Набор точек текущей фигуры с координатами после вращения данной
+     *         фигуры.
+     */
+    public Point[] predictCurrentFigurePoints(Point figureAnchor, Rotation rotation) {
+        return FigureRotator.predictCurrentFigurePoints(rotation, figureAnchor, getCurrentFigureType());
+    }
+
+    /**
+     * Позволяет определить координаты точек текущей фигуры в исходном положении. (в
+     * котором она появляется в стакане)!
+     * 
+     * Экспериментальный метод. Использовать осторожно!
+     * 
+     * @param figureAnchor Точка - "якорь" фигуры.
+     * @return Набор точек текущей фигуры с координатами после вращения данной
+     *         фигуры.
+     */
+    public Point[] predictCurrentFigurePoints(Point figureAnchor) {
+        return predictCurrentFigurePoints(figureAnchor, Rotation.CLOCKWIZE_0);
+    }
+
 }

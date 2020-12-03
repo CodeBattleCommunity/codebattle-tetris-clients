@@ -1,3 +1,5 @@
+package com.codenjoy.dojo.client;
+
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -19,19 +21,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package solver
 
-import (
-	"../board"
-)
-
-type YourSolver struct {
-}
-
-func NewSolver() *YourSolver {
-	return &YourSolver{}
-}
-
-func (p *YourSolver) GetAnswer(board *board.Board) string {
-	return "DOWN"
+public interface Closeable {
+    void close();
 }
