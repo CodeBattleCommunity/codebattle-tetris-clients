@@ -1,9 +1,8 @@
 package com.codenjoy.dojo.tetris.client;
 
-import static java.util.stream.Collectors.toList;
-
-import java.util.ArrayList;
-import java.util.List;
+import static com.codenjoy.dojo.services.Command.DOWN;
+import static com.codenjoy.dojo.services.Command.LEFT;
+import static com.codenjoy.dojo.services.Command.RIGHT;
 
 /*-
  * #%L
@@ -30,6 +29,7 @@ import java.util.List;
 import com.codenjoy.dojo.client.AbstractJsonSolver;
 import com.codenjoy.dojo.client.WebSocketRunner;
 import com.codenjoy.dojo.services.Command;
+import com.codenjoy.dojo.services.CommandChain;
 import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.RandomDice;
 
@@ -49,19 +49,15 @@ public class YourSolver extends AbstractJsonSolver<Board> {
 
     @Override
     public String getAnswer(Board board) {
-        List<Command> answerList = getAnswerList(board);
-        List<String> stringList = answerList.stream().map(d -> d.toString()).collect(toList());
-        return String.join(", ", stringList);
+        return getAnswerList(board).toString();
     }
 
-    private List<Command> getAnswerList(Board board) {
+    private CommandChain getAnswerList(Board board) {
         System.out.println(board.getGlass().getAt(board.getCurrentFigurePoint()));
-        List<Command> result = new ArrayList<Command>();
-        result.add(Command.LEFT);
-        result.add(Command.random(dice));
-        result.add(Command.ROTATE_CLOCKWISE_180);
+        return Command.LEFT
+                .then(Command.random(dice))
+                .then(Command.ROTATE_CLOCKWISE_180);
 
-        return result;
     }
 
     public static void main(String[] args) {
