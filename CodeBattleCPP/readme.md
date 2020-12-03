@@ -1,4 +1,6 @@
 ﻿# Клиент на С++
+ Для запуска нужно установить Visual Studio Community 2019.
+ 
  Пишем код для бота в этом файле
  
 codebattle-tetris-clients\CodeBattleCPP\CodeBattleCpp\CodeBattleCpp.cpp
