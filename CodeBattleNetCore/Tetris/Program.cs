@@ -26,7 +26,7 @@ namespace TetrisClient
 {
 	class Program
 	{
-		static string ServerUrl = "http://localhost:8080/codenjoy-contest/board/player/56r4jjp00yrtt3wcvwzy?code=5371613493337457091&gameName=tetris";
+		static string ServerUrl = "http://codebattle2020.westeurope.cloudapp.azure.com/codenjoy-contest/board/player/2no0o07dabnh1sdlci9o?code=3600205991694575832&gameName=tetris";
 
 		// ссылку можно взять в строке браузера после регистрации на сервере и логина
 		// http://server-ip:8080/codenjoy-contest/board/player/your@email.com?code=12345678901234567890
