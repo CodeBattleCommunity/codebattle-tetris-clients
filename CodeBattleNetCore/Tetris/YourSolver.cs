@@ -38,8 +38,13 @@ namespace TetrisClient
 		protected internal override Command Get(Board board)
 		{
 			// Код писать сюда!
+			return Command.DOWN;
+
+			// Команды можно комбинировать
+			/*
 			return Command.DOWN
 				.Then(Command.SUICIDE);
+			*/
 		}
 	}
 }
