@@ -20,7 +20,7 @@
  * #L%
  */
 var Configuration = require("./Configuration.js");
-var Direction = require("./Direction.js");
+var Direction = require("./Directions.js");
 var Element = require("./Element.js");
 var Point = require("./Point.js");
 var Board = require("./Board.js");
