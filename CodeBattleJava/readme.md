@@ -18,7 +18,7 @@
 
 #### Подключение к серверу и начало игры
 
-1. Чтобы подключится к серверу необходимо в файле CodeBattleJava\src\main\java\com\codenjoy\dojo\tetris\client\YourSolver.java прописать uri сервера игры
+1. Чтобы подключится к серверу необходимо в файле CodeBattleJava\src\main\java\com\codenjoy\dojo\tetris\client\YourSolver.java прописать url сервера игры
 
 ```java
 
