@@ -24,6 +24,7 @@ package com.codenjoy.dojo.tetris.client;
 
 import com.codenjoy.dojo.client.AbstractTextBoard;
 import com.codenjoy.dojo.services.FigureRotator;
+import com.codenjoy.dojo.services.PlayerLevel;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.Rotation;
 import com.codenjoy.dojo.tetris.model.Elements;
@@ -87,6 +88,12 @@ public class Board extends AbstractTextBoard {
     public GlassBoard getGlass() {
         String glassString = getJson().getJSONArray("layers").getString(0);
         return (GlassBoard) new GlassBoard().forString(glassString);
+    }
+
+    public PlayerLevel getLevel() {
+        JSONObject progress = getJson().getJSONObject("levelProgress");
+        return new PlayerLevel(progress.getInt("current"), progress.getInt("lastPassed"),
+                progress.getInt("total"));
     }
 
     private Elements getElement(String figureType) {
