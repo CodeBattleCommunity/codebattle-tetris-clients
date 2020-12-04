@@ -45,6 +45,12 @@ namespace TetrisClient
 		}
 
 		/// <summary>
+		/// Получить информацию об игровом уровне
+		/// </summary>
+		/// <returns></returns>
+		public PlayerLevel GetPlayerLevel() => RawBoard.LevelProgress;
+
+		/// <summary>
 		/// Получить игровое поле в виде массива символов
 		/// </summary>
 		/// <returns></returns>

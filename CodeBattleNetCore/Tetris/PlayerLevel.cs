@@ -19,18 +19,12 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-using Newtonsoft.Json;
-using System.Collections.Generic;
-
 namespace TetrisClient
 {
-	public class JsonBoard
+	public class PlayerLevel
 	{
-		public Point CurrentFigurePoint { get; set; }
-		public char CurrentFigureType { get; set; }
-		public List<char> FutureFigures { get; set; }
-		public List<string> Layers { get; set; }
-		[JsonProperty("levelProgress")]
-		public PlayerLevel LevelProgress { get; set; }
+		public int Total { get; set; }
+		public int Current { get; set; }
+		public int LastPassed { get; set; }
 	}
 }
