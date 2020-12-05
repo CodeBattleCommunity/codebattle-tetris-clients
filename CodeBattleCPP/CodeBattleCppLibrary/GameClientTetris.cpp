@@ -62,7 +62,7 @@ void GameClientTetris::update_func(std::function<void()> _message_handler)
 			//currentFigurePoint
 			int x = 0;
 			int y = 0;
-			for (auto& item : d["currentFigurePoint"].GetObjectW()) {
+			for (auto& item : d["currentFigurePoint"].GetObject()) {
 				if (item.name == "x") {
 					x = item.value.GetInt();
 				}
@@ -87,24 +87,10 @@ void GameClientTetris::update_func(std::function<void()> _message_handler)
 			for (auto item : mapStr) {
 				listChars.push_back(item);
 			}
-
-			//std::cout << "levelProgress" << "\n";
-			int maxLevel = 0;
-			int currentLevel = 0;
-			int lastPassed = 0;
-			for (auto& item : d["levelProgress"].GetObjectW()) {
-				if (item.name == "total") {
-					maxLevel = item.value.GetInt();
-				}
-				else if (item.name == "current") {
-					currentLevel = item.value.GetInt();
-				}
-				else if (item.name == "lastPassed") {
-					lastPassed = item.value.GetInt();
-				}
-				//std::cout << item.name.GetString() <<":" << item.value.GetInt() << "\n";
-			}
-
+			
+			int maxLevel = d["levelProgress"]["total"].GetInt();
+			int currentLevel = d["levelProgress"]["current"].GetInt();
+			int lastPassed = d["levelProgress"]["lastPassed"].GetInt();
 			levelProgress = new LevelProgress(maxLevel, currentLevel, lastPassed);
 
 			double line = sqrt(length);
