@@ -93,7 +93,7 @@ void GameClientTetris::update_func(std::function<void()> _message_handler)
 			int lastPassed = d["levelProgress"]["lastPassed"].GetInt();
 			levelProgress = new LevelProgress(maxLevel, currentLevel, lastPassed);
 
-			double line = sqrt(length);
+			int line = (int)sqrt(length);
 
 			map = new Element*[line];
 			for (uint32_t j = 0; j < line; j++)
