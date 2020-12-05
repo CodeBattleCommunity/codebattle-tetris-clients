@@ -32,7 +32,7 @@ class Point:
     def get_y(self) -> int:
         return self._y
 
-    def to_string(self) -> int:
+    def to_string(self) -> str:
         return "[{},{}]".format(self._x, self._y)
 
     # Returns new BoardPoint object shifted bottom "delta" points

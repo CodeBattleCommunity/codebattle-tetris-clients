@@ -1,6 +1,7 @@
 from math import sqrt
 
 from tetris_client.internals.element import Element, prepare_element
+from tetris_client.internals.player_level import PlayerLevel
 from tetris_client.internals.point import Point, prepare_point
 from typing import Optional, Tuple, List, Union, Text
 import json
@@ -15,6 +16,7 @@ class Board:
         self._layer = self._json["layers"][0]
         self._len = len(self._layer)  # the length of the string
         self._size = int(sqrt(self._len))  # size of the board
+        self._level = self._json['levelProgress']
 
     def __str__(self):
         return "Board:\n{brd}".format(brd=self._line_by_line())
@@ -81,6 +83,13 @@ class Board:
     def get_shift_by_point(self, point: Union[Point, Tuple[int]]) -> int:
         point = prepare_point(point)
         return point.get_y() * self._size + point.get_x()
+
+    def get_level(self) -> PlayerLevel:
+        return PlayerLevel(
+            int(self._json["levelProgress"]["current"]),
+            int(self._json["levelProgress"]["lastPassed"]),
+            int(self._json["levelProgress"]["total"]),
+        )
 
     def predict_figure_points_after_rotation(
         self,
