@@ -2,7 +2,7 @@
 
 #include <string>
 #include <thread>
-#include "easywsclient\easywsclient.hpp"
+#include "easywsclient/easywsclient.hpp"
 #ifdef _WIN32
 #pragma comment( lib, "ws2_32" )
 #include <WinSock2.h>
