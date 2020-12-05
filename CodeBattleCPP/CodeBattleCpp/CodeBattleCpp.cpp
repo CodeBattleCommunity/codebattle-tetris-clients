@@ -1,10 +1,10 @@
 #include <iostream>
 #include <random>
 
-#include "GameClientTetris.h"
-#include "CommandBuilder.h"
+#include "../CodeBattleCppLibrary/GameClientTetris.h"
+#include "../CodeBattleCppLibrary/CommandBuilder.h"
 
-void main()
+int main()
 {
 	srand(time(0));
 
