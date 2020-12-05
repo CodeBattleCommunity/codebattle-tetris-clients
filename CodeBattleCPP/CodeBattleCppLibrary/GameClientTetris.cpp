@@ -12,6 +12,7 @@ GameClientTetris::GameClientTetris(std::string _server)
 	map = nullptr;
 	board = nullptr;
 	glassBoard = nullptr;
+	levelProgress = nullptr;
 
 	path = _server.replace(_server.find("http"), sizeof("http")-1, "ws");
 	path = path.replace(path.find("board/player/"),sizeof("board/player/")-1,"ws?user=");
@@ -61,7 +62,7 @@ void GameClientTetris::update_func(std::function<void()> _message_handler)
 			//currentFigurePoint
 			int x = 0;
 			int y = 0;
-			for (auto& item : d["currentFigurePoint"].GetObjectW()) {
+			for (auto& item : d["currentFigurePoint"].GetObject()) {
 				if (item.name == "x") {
 					x = item.value.GetInt();
 				}
@@ -86,6 +87,12 @@ void GameClientTetris::update_func(std::function<void()> _message_handler)
 			for (auto item : mapStr) {
 				listChars.push_back(item);
 			}
+			
+			int maxLevel = d["levelProgress"]["total"].GetInt();
+			int currentLevel = d["levelProgress"]["current"].GetInt();
+			int lastPassed = d["levelProgress"]["lastPassed"].GetInt();
+			levelProgress = new LevelProgress(maxLevel, currentLevel, lastPassed);
+
 			double line = sqrt(length);
 
 			map = new Element*[line];
@@ -117,7 +124,7 @@ void GameClientTetris::update_func(std::function<void()> _message_handler)
 				std::cout << "\n";
 			}
 			glassBoard = new GlassBoard(map, line);
-			board = new GameBoard(glassBoard, currentFigurePoint, currentFigureType, futureFigures);
+			board = new GameBoard(glassBoard, currentFigurePoint, currentFigureType, futureFigures, levelProgress);
 			_message_handler();
 		});
 	}

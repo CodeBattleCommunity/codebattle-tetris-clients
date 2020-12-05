@@ -2,11 +2,16 @@
 #include "BoardPoint.h"
 #include "GameBoard.h"
 
-GameBoard::GameBoard(GlassBoard* glassBoard, BoardPoint currentFigurePoint, Element currentFigureType, std::list<Element> futureFigures) {
+GameBoard::GameBoard(GlassBoard* glassBoard, BoardPoint currentFigurePoint, Element currentFigureType, std::list<Element> futureFigures, LevelProgress* levelProgress) {
 	this->glassBoard = glassBoard;
+	this->levelProgress = levelProgress;
 	this->currentFigurePoint = currentFigurePoint; 
 	this->currentFigureType = currentFigureType;
 	this->futureFigures = futureFigures;
+}
+
+LevelProgress* GameBoard::getLevelProgress() {
+	return this->levelProgress;
 }
 
 BoardPoint GameBoard::getCurrentFigurePoint() {
