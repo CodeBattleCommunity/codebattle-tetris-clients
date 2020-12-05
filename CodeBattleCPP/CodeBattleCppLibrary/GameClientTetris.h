@@ -19,12 +19,14 @@
 #include "Element.h"
 #include "GameBoard.h"
 #include "GlassBoard.h"
+#include "LevelProgress.h"
 
 class GameClientTetris
 {
 	Element**map;
 	GameBoard *board;
 	GlassBoard* glassBoard;
+	LevelProgress* levelProgress;
 	uint32_t map_size, player_x, player_y;
 
 

@@ -27,6 +27,7 @@
     <ClInclude Include="easywsclient\easywsclient.hpp" />
     <ClInclude Include="GameClientTetris.h" />
     <ClInclude Include="GlassBoard.h" />
+    <ClInclude Include="LevelProgress.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoardPoint.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameClientTetris.cpp" />
     <ClCompile Include="GlassBoard.cpp" />
+    <ClCompile Include="LevelProgress.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8F09F71F-E153-4C37-B12E-692A4CA8FE7A}</ProjectGuid>
