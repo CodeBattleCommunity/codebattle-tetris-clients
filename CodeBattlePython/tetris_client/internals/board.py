@@ -103,7 +103,7 @@ class Board:
         x: int = None,
         y: int = None,
         figure: Union[Element, Text] = None,
-        rotation: int = 0,
+        rotation: int = 0
     ):
         # x, y - координата приходящая с сервера в 'currentFigurePoint' содержит координату новой фигурки.
         # [0, 0] - левый нижний угол фигуры
@@ -128,13 +128,13 @@ class Board:
     def _xy2strpos(self, x: int, y: int) -> int:
         return self._size * y + x
 
-    def print_board(self, layer = None):
-        print(self._line_by_line(layer))
+    def print_board(self):
+        print(self._line_by_line())
 
-    def _line_by_line(self, layer) -> str:
+    def _line_by_line(self) -> str:
         return "\n".join(
             [
-                self._json["layers"][0][i : i + self._size] if not layer else layer
+                self._json["layers"][0][i : i + self._size]
                 for i in range(0, self._len, self._size)
             ]
         )
