@@ -13,11 +13,19 @@ class Board:
     def __init__(self, board_string):
         self._string = board_string.replace("\n", "")
         self._json = json.loads(self._string)
-        self._layer = self._json["layers"][0]
-        self._len = len(self._layer)  # the length of the string
-        self._size = int(sqrt(self._len))  # size of the board
+        self._len = len(self._json["layers"][0])
+        self._size = int(sqrt(self._len))
+        self._layer = self.prepare_layer()
         self._level = self._json['levelProgress']
-
+        
+    def prepare_layer(self):
+        revert_board = []
+        for i in range(0, self._len, self._size):
+            revert_board.append(self._json["layers"][0][i : i + self._size])
+        revert_board = revert_board[::-1]
+        _layer = "".join(revert_board)
+        return _layer
+        
     def __str__(self):
         return "Board:\n{brd}".format(brd=self._line_by_line())
 
@@ -67,7 +75,6 @@ class Board:
         self, point: Union[Point, Tuple[int]], element_object: Union[Element, str]
     ) -> bool:
         point = prepare_point(point)
-        element_object
         if point.is_out_of_board(self._size):
             return False
         return element_object == self.get_element_at(point)
@@ -96,7 +103,7 @@ class Board:
         x: int = None,
         y: int = None,
         figure: Union[Element, Text] = None,
-        rotation: int = 0
+        rotation: int = 0,
     ):
         # x, y - координата приходящая с сервера в 'currentFigurePoint' содержит координату новой фигурки.
         # [0, 0] - левый нижний угол фигуры
@@ -121,13 +128,13 @@ class Board:
     def _xy2strpos(self, x: int, y: int) -> int:
         return self._size * y + x
 
-    def print_board(self):
-        print(self._line_by_line())
+    def print_board(self, layer = None):
+        print(self._line_by_line(layer))
 
-    def _line_by_line(self) -> str:
+    def _line_by_line(self, layer) -> str:
         return "\n".join(
             [
-                self._json["layers"][0][i : i + self._size]
+                self._json["layers"][0][i : i + self._size] if not layer else layer
                 for i in range(0, self._len, self._size)
             ]
         )
